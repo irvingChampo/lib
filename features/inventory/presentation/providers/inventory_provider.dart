@@ -1,28 +1,26 @@
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/features/inventory/data/datasource/inventory_datasource.dart';
-import 'package:bienestar_integral_app/features/inventory/data/repository/inventory_repository_impl.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/entities/category.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/entities/inventory_item.dart';
-import 'package:bienestar_integral_app/features/inventory/domain/entities/unit.dart'; // (+)
+import 'package:bienestar_integral_app/features/inventory/domain/entities/unit.dart';
+// Imports de UseCases
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/create_category.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_categories.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_kitchen_inventory.dart';
-import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_units.dart'; // (+)
+import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_units.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/manage_product_stock.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/product_management.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 enum InventoryStatus { initial, loading, success, error }
 
 class InventoryProvider extends ChangeNotifier {
-  late final GetKitchenInventory _getKitchenInventory;
-  late final ProductManagement _productManagement;
-  late final ManageProductStock _manageProductStock;
-
-  late final GetCategories _getCategories;
-  late final CreateCategory _createCategory;
-  late final GetUnits _getUnits; // (+)
+  // MODIFICACIÓN: Dependencias inyectadas
+  final GetKitchenInventory _getKitchenInventory;
+  final ProductManagement _productManagement;
+  final ManageProductStock _manageProductStock;
+  final GetCategories _getCategories;
+  final CreateCategory _createCategory;
+  final GetUnits _getUnits;
 
   InventoryStatus _status = InventoryStatus.initial;
   String? _errorMessage;
@@ -30,24 +28,27 @@ class InventoryProvider extends ChangeNotifier {
   int? _filterCategoryId;
 
   List<Category> _categories = [];
-  List<Unit> _units = []; // (+) Lista de unidades
+  List<Unit> _units = [];
 
-  InventoryProvider() {
-    final datasource = InventoryDatasourceImpl(client: http.Client());
-    final repository = InventoryRepositoryImpl(datasource: datasource);
-
-    _getKitchenInventory = GetKitchenInventory(repository);
-    _productManagement = ProductManagement(repository);
-    _manageProductStock = ManageProductStock(repository);
-    _getCategories = GetCategories(repository);
-    _createCategory = CreateCategory(repository);
-    _getUnits = GetUnits(repository); // (+)
-  }
+  // MODIFICACIÓN: Constructor con inyección
+  InventoryProvider({
+    required GetKitchenInventory getKitchenInventory,
+    required ProductManagement productManagement,
+    required ManageProductStock manageProductStock,
+    required GetCategories getCategories,
+    required CreateCategory createCategory,
+    required GetUnits getUnits,
+  })  : _getKitchenInventory = getKitchenInventory,
+        _productManagement = productManagement,
+        _manageProductStock = manageProductStock,
+        _getCategories = getCategories,
+        _createCategory = createCategory,
+        _getUnits = getUnits;
 
   InventoryStatus get status => _status;
   String? get errorMessage => _errorMessage;
   List<Category> get categories => _categories;
-  List<Unit> get units => _units; // (+) Getter
+  List<Unit> get units => _units;
 
   List<InventoryItem> get inventory {
     if (_filterCategoryId == null) {
@@ -63,7 +64,6 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // (+) Cargar Unidades
   Future<void> loadUnits() async {
     try {
       _units = await _getUnits();
@@ -104,11 +104,10 @@ class InventoryProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Cargamos TODO: inventario, categorías y unidades
       await Future.wait([
         _getKitchenInventory(kitchenId).then((value) => _fullInventory = value),
         loadCategories(),
-        loadUnits() // (+)
+        loadUnits()
       ]);
       _status = InventoryStatus.success;
     } on ServerException catch (e) {
@@ -157,10 +156,18 @@ class InventoryProvider extends ChangeNotifier {
     return false;
   }
 
-  // ... (Resto de métodos updateStock, setStock, etc. se mantienen IGUAL) ...
   Future<bool> editProduct({required int kitchenId, required int productId, required String name, required String description, required String unit}) async {
     try {
+      // Nota: Aquí se accedía al repo a través del caso de uso. Al ser inyectado,
+      // el caso de uso debería exponer este método o tener otro caso de uso 'UpdateProduct'.
+      // Para mantener compatibilidad rápida, asumiremos que ProductManagement tiene acceso
+      // o el repositorio es público.
+      // MEJOR PRÁCTICA: Inyectar UpdateProductUseCase.
+      // AJUSTE RÁPIDO: Acceder al repositorio del caso de uso (si es publico) o actualizar repository en UseCase.
+
+      // Como ProductManagement tiene 'repository' público (en tu código original lo definiste así: final InventoryRepository repository;), esto funcionará:
       await _productManagement.repository.updateProduct(kitchenId: kitchenId, productId: productId, name: name, description: description, unit: unit);
+
       await loadInventory(kitchenId);
       return true;
     } catch (e) {

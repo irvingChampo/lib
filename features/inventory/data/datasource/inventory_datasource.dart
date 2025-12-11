@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/core/network/http_client.dart';
 import 'package:bienestar_integral_app/features/inventory/data/models/category_model.dart';
 import 'package:bienestar_integral_app/features/inventory/data/models/inventory_item_model.dart';
 import 'package:bienestar_integral_app/features/inventory/data/models/product_model.dart';
@@ -31,10 +30,11 @@ abstract class InventoryDatasource {
 
 class InventoryDatasourceImpl implements InventoryDatasource {
   final http.Client client;
+  // URL Base definida hardcoded según tu archivo original
   final String _baseUrl = "https://api-gateway.bim2.xyz/api/v1/inventory";
 
-  InventoryDatasourceImpl({http.Client? client})
-      : client = client ?? HttpClient().client;
+  // MODIFICACIÓN: Inyección de dependencia explícita por constructor
+  InventoryDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
     final prefs = await SharedPreferences.getInstance();
@@ -52,7 +52,6 @@ class InventoryDatasourceImpl implements InventoryDatasource {
   Future<int> registerProduct(int kitchenId, Map<String, dynamic> data) async {
     final url = Uri.parse('$_baseUrl/kitchens/$kitchenId/products/register');
 
-    // Debug: Ver qué enviamos
     debugPrint('\n🔵 [REGISTER REQUEST] URL: $url');
     debugPrint('🔵 [REGISTER REQUEST] BODY: ${json.encode(data)}');
 
@@ -69,11 +68,9 @@ class InventoryDatasourceImpl implements InventoryDatasource {
       if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = json.decode(response.body);
 
-        // --- LÓGICA DE EXTRACCIÓN DE ID ROBUSTA ---
-        // Buscamos el ID en "product" -> "id" (Según tu JSON)
-        // También probamos "data" -> "id" por si acaso cambia la estructura
         int? newId;
 
+        // Intentamos extraer el ID de varias ubicaciones posibles en la respuesta
         if (jsonResponse['product'] != null && jsonResponse['product']['id'] != null) {
           newId = int.tryParse(jsonResponse['product']['id'].toString());
         } else if (jsonResponse['data'] != null && jsonResponse['data']['id'] != null) {
@@ -81,13 +78,11 @@ class InventoryDatasourceImpl implements InventoryDatasource {
         }
 
         if (newId != null && newId > 0) {
-          debugPrint('✅ ID EXTRAÍDO EXITOSAMENTE: $newId');
           return newId;
         }
 
         throw ServerException('Producto creado, pero no se pudo obtener el ID de la respuesta.');
       } else {
-        // Manejo de errores del servidor
         String errorMsg = 'Error al registrar producto';
         try {
           final error = json.decode(response.body);
@@ -103,14 +98,11 @@ class InventoryDatasourceImpl implements InventoryDatasource {
 
   @override
   Future<void> addStock(int kitchenId, int productId, double amount) async {
-    // Validación de seguridad antes de enviar
     if (productId <= 0) {
       throw ServerException('Error interno: ID de producto inválido ($productId) para agregar stock.');
     }
 
     final url = Uri.parse('$_baseUrl/kitchens/$kitchenId/items/$productId/add');
-
-    debugPrint('\n🔵 [ADD STOCK] URL: $url');
 
     try {
       final response = await client.post(
@@ -120,7 +112,6 @@ class InventoryDatasourceImpl implements InventoryDatasource {
       );
 
       if (response.statusCode != 200) {
-        debugPrint('🟠 [ADD STOCK ERROR]: ${response.body}');
         throw ServerException('Error al agregar stock');
       }
     } catch (e) {
@@ -128,8 +119,6 @@ class InventoryDatasourceImpl implements InventoryDatasource {
       throw NetworkException('Error de conexión al agregar stock');
     }
   }
-
-  // --- RESTO DE MÉTODOS (Standard implementation) ---
 
   @override
   Future<List<UnitModel>> getUnits() async {
@@ -178,7 +167,9 @@ class InventoryDatasourceImpl implements InventoryDatasource {
         headers: await _getHeaders(),
         body: json.encode({'name': name, 'description': description}),
       );
-      if (response.statusCode != 200 && response.statusCode != 201) throw ServerException('Error al crear categoría');
+      if (response.statusCode != 200 && response.statusCode != 201) {
+        throw ServerException('Error al crear categoría');
+      }
     } catch (e) {
       if (e is ServerException) rethrow;
       throw NetworkException('Error de conexión');

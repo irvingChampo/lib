@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/core/network/http_client.dart';
+// Ya no necesitamos core/network/http_client.dart
 import 'package:bienestar_integral_app/features/payments/data/models/payment_intent_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,8 +18,8 @@ abstract class PaymentDatasource {
 class PaymentDatasourceImpl implements PaymentDatasource {
   final http.Client client;
 
-  PaymentDatasourceImpl({http.Client? client})
-      : client = client ?? HttpClient().client;
+  // MODIFICACIÓN: Inyección explícita por constructor
+  PaymentDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
     final prefs = await SharedPreferences.getInstance();
@@ -39,23 +39,21 @@ class PaymentDatasourceImpl implements PaymentDatasource {
     required double amount,
     String? description,
   }) async {
+    // ... (El resto del código del método se mantiene igual, no cambia la lógica)
     var apiUrl = dotenv.env['API_URL'];
 
     if (apiUrl == null || apiUrl.isEmpty) {
       throw ServerException('La variable API_URL no se encontró en el archivo .env');
     }
 
-    // Aseguramos que no haya doble slash
     if (apiUrl.endsWith('/')) {
       apiUrl = apiUrl.substring(0, apiUrl.length - 1);
     }
 
-    // Construcción de la URL basada estrictamente en tu JSON
     final url = Uri.parse('$apiUrl/payments/$kitchenId/create-intent');
 
-    // Imprimimos para que puedas mostrarle la evidencia a tu Backend Dev
     debugPrint('--------------------------------------------------');
-    debugPrint('🚀 INTENTANDO PAGO A: $url');
+    debugPrint(' INTENTANDO PAGO A: $url');
     debugPrint('--------------------------------------------------');
 
     try {
@@ -68,8 +66,8 @@ class PaymentDatasourceImpl implements PaymentDatasource {
 
       final response = await client.post(url, headers: headers, body: body);
 
-      debugPrint('📡 STATUS: ${response.statusCode}');
-      debugPrint('📡 BODY: ${response.body}');
+      debugPrint(' STATUS: ${response.statusCode}');
+      debugPrint(' BODY: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
@@ -80,7 +78,6 @@ class PaymentDatasourceImpl implements PaymentDatasource {
           throw ServerException('El servidor no devolvió una URL válida.');
         }
       } else if (response.statusCode == 404) {
-        // Mensaje específico para ayudar a depurar con el equipo de backend
         throw ServerException('Ruta no encontrada en el Gateway (404). Verifica que "/payments" esté mapeado.');
       } else {
         final errorDecode = json.decode(response.body);

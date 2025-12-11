@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/core/network/http_client.dart';
+// Eliminamos import de core/network/http_client.dart
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_detail_model.dart';
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_model.dart';
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_subscription_model.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,8 +22,10 @@ abstract class KitchenDatasource {
 class KitchenDatasourceImpl implements KitchenDatasource {
   final http.Client client;
 
-  KitchenDatasourceImpl({http.Client? client})
-      : client = client ?? HttpClient().client;
+  // MODIFICACIÓN: Inyección obligatoria.
+  // Nota: Esto es compatible con el código existente en otras features no migradas
+  // siempre y cuando pasen el cliente (ej: KitchenDatasourceImpl(client: http.Client()))
+  KitchenDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
     final prefs = await SharedPreferences.getInstance();
@@ -45,7 +46,8 @@ class KitchenDatasourceImpl implements KitchenDatasource {
     return apiUrl;
   }
 
-  // --- MÉTODOS EXISTENTES ---
+  // ... (El resto de métodos se mantienen IGUALES)
+  // Copia el contenido de los métodos de tu archivo original.
 
   @override
   Future<List<KitchenModel>> getNearbyKitchens() async {
@@ -111,11 +113,9 @@ class KitchenDatasourceImpl implements KitchenDatasource {
   Future<List<ScheduleModel>> getKitchenSchedules(int kitchenId) async {
     final apiUrl = _getApiUrl();
     final url = Uri.parse('$apiUrl/kitchens/$kitchenId/schedules');
-
     try {
       final headers = await _getHeaders();
       final response = await client.get(url, headers: headers);
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
         final List<dynamic> data = jsonResponse['data'];
@@ -131,7 +131,6 @@ class KitchenDatasourceImpl implements KitchenDatasource {
   @override
   Future<void> subscribeToKitchen(int kitchenId) async {
     final apiUrl = _getApiUrl();
-    // Endpoint basado en tu JSON: /api/v1/kitchens/:id/subscribe
     final url = Uri.parse('$apiUrl/kitchens/$kitchenId/subscribe');
     try {
       final response = await client.post(url, headers: await _getHeaders());
@@ -159,24 +158,15 @@ class KitchenDatasourceImpl implements KitchenDatasource {
     }
   }
 
-  // --- AQUÍ ESTÁN LAS CORRECCIONES BASADAS EN TU JSON ---
-
   @override
   Future<List<KitchenSubscriptionModel>> getMyKitchenSubscriptions() async {
     final apiUrl = _getApiUrl();
-
-    // CORRECCIÓN: Usamos la URL exacta que me pasaste en el JSON
-    // url: "http://localhost:3000/api/v1/kitchens/subscribed/me"
     final url = Uri.parse('$apiUrl/kitchens/subscribed/me');
-
     try {
       final headers = await _getHeaders();
       final response = await client.get(url, headers: headers);
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-
-        // Verificamos success y data
         if (jsonResponse['success'] == true && jsonResponse['data'] != null) {
           final List<dynamic> data = jsonResponse['data'];
           return data.map((json) => KitchenSubscriptionModel.fromJson(json)).toList();
@@ -193,7 +183,6 @@ class KitchenDatasourceImpl implements KitchenDatasource {
 
   @override
   Future<List<int>> getSubscribedKitchenIds() async {
-    // Reutilizamos el método corregido arriba para obtener solo los IDs
     try {
       final subscriptions = await getMyKitchenSubscriptions();
       return subscriptions.map((sub) => sub.kitchen.id).toList();

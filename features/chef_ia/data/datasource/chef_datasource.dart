@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/core/network/http_client.dart';
+// Ya no necesitamos importar core/network/http_client.dart aquí para las nuevas features
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -14,8 +14,8 @@ class ChefDatasourceImpl implements ChefDatasource {
   final http.Client client;
   final String? _apiUrl = dotenv.env['API_URL'];
 
-  ChefDatasourceImpl({http.Client? client})
-      : client = client ?? HttpClient().client;
+  // MODIFICACIÓN: Ahora el cliente es requerido y no se instancia internamente por defecto
+  ChefDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
     final prefs = await SharedPreferences.getInstance();
@@ -31,7 +31,6 @@ class ChefDatasourceImpl implements ChefDatasource {
 
   @override
   Future<String> askChef(int kitchenId, String question) async {
-    // Validar URL base
     var baseUrl = _apiUrl;
     if (baseUrl == null) throw ServerException('API_URL no configurada.');
     if (baseUrl.endsWith('/')) baseUrl = baseUrl.substring(0, baseUrl.length - 1);
@@ -57,7 +56,6 @@ class ChefDatasourceImpl implements ChefDatasource {
           throw ServerException('La respuesta del Chef no tuvo el formato esperado.');
         }
       } else {
-        // Manejo de errores específicos según tu documentación
         if (response.statusCode == 403) {
           throw ServerException('No tienes permisos para consultar esta cocina.');
         }

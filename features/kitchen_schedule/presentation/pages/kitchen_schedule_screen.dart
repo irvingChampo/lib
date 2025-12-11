@@ -1,5 +1,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bienestar_integral_app/core/router/routes.dart';
+// IMPORTAMOS EL SERVICE LOCATOR Y EL USECASE
+import 'package:bienestar_integral_app/core/di/service_locator.dart';
+import 'package:bienestar_integral_app/features/kitchen_schedule/domain/usecase/create_kitchen_schedules.dart';
+
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:bienestar_integral_app/features/kitchen_schedule/presentation/providers/kitchen_schedule_provider.dart';
 import 'package:bienestar_integral_app/features/settings/presentation/widgets/home_app_bar.dart';
@@ -15,12 +19,14 @@ class KitchenScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => KitchenScheduleProvider(),
+      // MODIFICACIÓN: Usamos getIt para inyectar el UseCase
+      create: (_) => KitchenScheduleProvider(getIt<CreateKitchenSchedules>()),
       child: _KitchenScheduleBody(kitchenId: kitchenId),
     );
   }
 }
 
+// ... (El resto del archivo _KitchenScheduleBody se mantiene igual) ...
 class _KitchenScheduleBody extends StatelessWidget {
   final int kitchenId;
   const _KitchenScheduleBody({required this.kitchenId});
@@ -29,7 +35,7 @@ class _KitchenScheduleBody extends StatelessWidget {
     final provider = context.read<KitchenScheduleProvider>();
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay(hour: 9, minute: 0),
+      initialTime: const TimeOfDay(hour: 9, minute: 0),
     );
     if (picked != null) {
       provider.updateTime(isWeekend: isWeekend, isStart: isStart, time: picked);
@@ -48,7 +54,6 @@ class _KitchenScheduleBody extends StatelessWidget {
         title: '¡Horarios Configurados!',
         desc: 'Tu cocina está lista para recibir voluntarios.',
         btnOkOnPress: () {
-          // Redirigir al Admin Home y limpiar el stack para no volver aquí
           context.go(AppRoutes.adminHomePath);
         },
       ).show();
@@ -65,7 +70,6 @@ class _KitchenScheduleBody extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
-      // showBackButton: false para obligar a configurar
       appBar: const HomeAppBar(title: 'Configuración Inicial', showBackButton: false),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),

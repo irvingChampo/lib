@@ -1,9 +1,6 @@
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/features/chef_ia/data/datasource/chef_datasource.dart';
-import 'package:bienestar_integral_app/features/chef_ia/data/repository/chef_repository_impl.dart';
 import 'package:bienestar_integral_app/features/chef_ia/domain/usecase/ask_chef.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 enum ChefStatus { idle, loading, success, error }
 
@@ -16,7 +13,8 @@ class ChatMessage {
 }
 
 class ChefProvider extends ChangeNotifier {
-  late final AskChef _askChef;
+  // MODIFICACIÓN: La dependencia es final y se inyecta
+  final AskChef _askChef;
 
   ChefStatus _status = ChefStatus.idle;
   String? _errorMessage;
@@ -24,11 +22,8 @@ class ChefProvider extends ChangeNotifier {
   // Historial del chat
   final List<ChatMessage> _messages = [];
 
-  ChefProvider() {
-    final datasource = ChefDatasourceImpl(client: http.Client());
-    final repository = ChefRepositoryImpl(datasource: datasource);
-    _askChef = AskChef(repository);
-
+  // MODIFICACIÓN: Constructor recibe el caso de uso
+  ChefProvider(this._askChef) {
     // Mensaje de bienvenida inicial
     _messages.add(ChatMessage(
       text: "¡Hola! Soy tu Chef IA. 🧑‍🍳\nPregúntame qué podemos cocinar con el inventario actual.",
@@ -44,7 +39,6 @@ class ChefProvider extends ChangeNotifier {
   Future<void> sendMessage(String question, int kitchenId) async {
     if (question.trim().isEmpty) return;
 
-    // 1. Agregar mensaje del usuario a la lista inmediatamente
     _messages.add(ChatMessage(
       text: question,
       isUser: true,
@@ -54,10 +48,9 @@ class ChefProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // 2. Consultar a la API
+      // Usamos la instancia inyectada
       final answer = await _askChef(kitchenId, question);
 
-      // 3. Agregar respuesta del Chef
       _messages.add(ChatMessage(
         text: answer,
         isUser: false,
@@ -85,7 +78,7 @@ class ChefProvider extends ChangeNotifier {
   void _addSystemMessage(String text) {
     _messages.add(ChatMessage(
       text: text,
-      isUser: false, // Lo mostramos como mensaje del sistema/bot
+      isUser: false,
       timestamp: DateTime.now(),
     ));
   }

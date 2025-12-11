@@ -1,29 +1,24 @@
 import 'package:bienestar_integral_app/core/error/exception.dart';
-import 'package:bienestar_integral_app/features/kitchen_schedule/data/datasource/kitchen_schedule_datasource.dart';
-import 'package:bienestar_integral_app/features/kitchen_schedule/data/repository/kitchen_schedule_repository_impl.dart';
+// Eliminamos imports de data (datasource/repo) ya que no los usamos directamente
 import 'package:bienestar_integral_app/features/kitchen_schedule/domain/usecase/create_kitchen_schedules.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 enum ScheduleStatus { initial, loading, success, error }
 
 class KitchenScheduleProvider extends ChangeNotifier {
-  late final CreateKitchenSchedules _createKitchenSchedules;
+  // MODIFICACIÓN: Dependencia inyectada
+  final CreateKitchenSchedules _createKitchenSchedules;
 
   ScheduleStatus _status = ScheduleStatus.initial;
   String? _errorMessage;
 
-  // Variables para almacenar las horas
   TimeOfDay? weekStart;
   TimeOfDay? weekEnd;
   TimeOfDay? weekendStart;
   TimeOfDay? weekendEnd;
 
-  KitchenScheduleProvider() {
-    final datasource = KitchenScheduleDatasourceImpl(client: http.Client());
-    final repository = KitchenScheduleRepositoryImpl(datasource: datasource);
-    _createKitchenSchedules = CreateKitchenSchedules(repository);
-  }
+  // MODIFICACIÓN: Constructor recibe el caso de uso
+  KitchenScheduleProvider(this._createKitchenSchedules);
 
   ScheduleStatus get status => _status;
   String? get errorMessage => _errorMessage;
@@ -41,7 +36,6 @@ class KitchenScheduleProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Formatea TimeOfDay a "HH:mm" (ej: 08:00)
   String _formatTime(TimeOfDay time) {
     final hour = time.hour.toString().padLeft(2, '0');
     final minute = time.minute.toString().padLeft(2, '0');
@@ -61,6 +55,7 @@ class KitchenScheduleProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
+      // Usamos la instancia inyectada
       await _createKitchenSchedules(
         kitchenId: kitchenId,
         weekStart: _formatTime(weekStart!),
