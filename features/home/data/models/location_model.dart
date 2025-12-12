@@ -4,7 +4,7 @@ class LocationModel extends Location {
   LocationModel({
     required super.id,
     required super.streetAddress,
-    required super.neighborhood, // <-- CAMPO AÑADIDO
+    required super.neighborhood,
     required super.stateId,
     required super.municipalityId,
     required super.postalCode,
@@ -14,7 +14,7 @@ class LocationModel extends Location {
     return LocationModel(
       id: json['id'] ?? 0,
       streetAddress: json['streetAddress'] ?? 'Dirección no disponible',
-      neighborhood: json['neighborhood'] ?? 'Colonia no disponible', // <-- CAMPO AÑADIDO
+      neighborhood: json['neighborhood'] ?? 'Colonia no disponible',
       stateId: json['stateId'] ?? 0,
       municipalityId: json['municipalityId'] ?? 0,
       postalCode: json['postalCode'] ?? 'N/A',

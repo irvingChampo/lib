@@ -5,8 +5,8 @@ import 'package:bienestar_integral_app/features/add_product/presentation/pages/a
 import 'package:bienestar_integral_app/features/admin_home/presentation/pages/admin_home_screen.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/pages/login_screen.dart';
 import 'package:bienestar_integral_app/features/chef_ia/presentation/pages/chef_ia_screen.dart';
-import 'package:bienestar_integral_app/features/events/domain/entities/event.dart'; // <-- IMPORTANTE: Importar Entidad Evento
-import 'package:bienestar_integral_app/features/events/presentation/pages/edit_event_screen.dart'; // <-- IMPORTANTE: Importar Pantalla Edición
+import 'package:bienestar_integral_app/features/events/domain/entities/event.dart';
+import 'package:bienestar_integral_app/features/events/presentation/pages/edit_event_screen.dart';
 import 'package:bienestar_integral_app/features/events/presentation/pages/event_detail_screen.dart';
 import 'package:bienestar_integral_app/features/events/presentation/pages/event_details_screen.dart';
 import 'package:bienestar_integral_app/features/home/presentation/pages/home_screen.dart';
@@ -31,12 +31,10 @@ class AppRouter {
     initialLocation: AppRoutes.loginPath,
     refreshListenable: appState,
     routes: [
-      // Rutas Públicas (Auth)
       GoRoute(path: AppRoutes.loginPath, name: AppRoutes.login, builder: (c, s) => const LoginScreen()),
       GoRoute(path: AppRoutes.registerStep1Path, name: AppRoutes.registerStep1, builder: (c, s) => const RegisterStep1Screen()),
       GoRoute(path: AppRoutes.registerStep3Path, name: AppRoutes.registerStep3, builder: (c, s) => const RegisterStep3Screen()),
 
-      // Rutas de Voluntario (User)
       GoRoute(path: AppRoutes.homePath, name: AppRoutes.home, builder: (c, s) => const HomeScreen()),
       GoRoute(
         path: '${AppRoutes.eventDetailsPath}/:kitchenId',
@@ -60,10 +58,8 @@ class AppRouter {
       GoRoute(path: AppRoutes.myEventsPath, name: AppRoutes.myEvents, builder: (c, s) => const MyEventsScreen()),
       GoRoute(path: AppRoutes.settingsPath, name: AppRoutes.settings, builder: (c, s) => const SettingsScreen()),
 
-      // Rutas de Administrador
       GoRoute(path: AppRoutes.adminHomePath, name: AppRoutes.adminHome, builder: (c, s) => const AdminHomeScreen()),
 
-      // Manage Volunteers (Recibe un objeto Event en 'extra')
       GoRoute(
         path: AppRoutes.manageVolunteersPath,
         name: AppRoutes.manageVolunteers,
@@ -78,28 +74,23 @@ class AppRouter {
       GoRoute(path: AppRoutes.accountStatusPath, name: AppRoutes.accountStatus, builder: (c, s) => const AccountStatusScreen()),
       GoRoute(path: AppRoutes.chefIaPath, name: AppRoutes.chefIa, builder: (c, s) => const ChefIaScreen()),
 
-      // --- NUEVA RUTA: EDITAR EVENTO ---
       GoRoute(
         path: AppRoutes.editEventPath,
         name: AppRoutes.editEvent,
         builder: (context, state) {
-          // Extraemos el evento pasado como argumento extra
           final event = state.extra as Event;
           return EditEventScreen(event: event);
         },
       ),
     ],
 
-    // --- LÓGICA DE REDIRECCIÓN ---
     redirect: (context, state) {
       final authStatus = appState.authStatus;
       final userRole = appState.userRole;
       final location = state.matchedLocation;
 
-      // 1. Identificar tipos de rutas
       final isAuthRoute = location == AppRoutes.loginPath || location.startsWith('/register');
 
-      // Lista de rutas exclusivas de admin
       final isAdminRoute = location.startsWith('/admin') ||
           [
             AppRoutes.manageVolunteersPath,
@@ -110,29 +101,24 @@ class AppRouter {
             AppRoutes.registerDonationPath,
             AppRoutes.accountStatusPath,
             AppRoutes.chefIaPath,
-            AppRoutes.editEventPath, // Agregamos la nueva ruta a la protección
+            AppRoutes.editEventPath,
           ].contains(location);
 
-      // 2. Manejo de estado: No Autenticado
       if (authStatus == AuthStatus.unauthenticated) {
-        // Si no está autenticado y quiere ir a una ruta privada, mandar al login
         return isAuthRoute ? null : AppRoutes.loginPath;
       }
 
-      // 3. Manejo de estado: Autenticado
       if (authStatus == AuthStatus.authenticated) {
-        // Si está en Login o Registro, redirigir a su Home correspondiente
         if (isAuthRoute) {
           return userRole == UserRole.admin ? AppRoutes.adminHomePath : AppRoutes.homePath;
         }
 
-        // Protección de rutas: Si es voluntario e intenta entrar a rutas de admin
         if (isAdminRoute && userRole != UserRole.admin) {
           return AppRoutes.homePath;
         }
       }
 
-      return null; // No redirigir
+      return null;
     },
   );
 }

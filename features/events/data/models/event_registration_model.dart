@@ -14,7 +14,6 @@ class EventRegistrationModel extends EventRegistration {
       id: json['id'] ?? 0,
       eventId: json['eventId'] ?? 0,
       registrationType: json['registrationType'] ?? 'volunteer',
-      // Si viene el objeto 'event' completo (como en my-registrations), lo parseamos
       event: json['event'] != null ? EventModel.fromJson(json['event']) : null,
     );
   }

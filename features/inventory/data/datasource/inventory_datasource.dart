@@ -17,7 +17,6 @@ abstract class InventoryDatasource {
   Future<List<UnitModel>> getUnits();
   Future<void> createCategory(String name, String description);
 
-  // Retorna el ID del producto creado
   Future<int> registerProduct(int kitchenId, Map<String, dynamic> data);
 
   Future<void> updateProduct(int kitchenId, int productId, Map<String, dynamic> data);
@@ -30,10 +29,8 @@ abstract class InventoryDatasource {
 
 class InventoryDatasourceImpl implements InventoryDatasource {
   final http.Client client;
-  // URL Base definida hardcoded según tu archivo original
   final String _baseUrl = "https://api-gateway.bim2.xyz/api/v1/inventory";
 
-  // MODIFICACIÓN: Inyección de dependencia explícita por constructor
   InventoryDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -52,9 +49,6 @@ class InventoryDatasourceImpl implements InventoryDatasource {
   Future<int> registerProduct(int kitchenId, Map<String, dynamic> data) async {
     final url = Uri.parse('$_baseUrl/kitchens/$kitchenId/products/register');
 
-    debugPrint('\n🔵 [REGISTER REQUEST] URL: $url');
-    debugPrint('🔵 [REGISTER REQUEST] BODY: ${json.encode(data)}');
-
     try {
       final response = await client.post(
         url,
@@ -62,15 +56,11 @@ class InventoryDatasourceImpl implements InventoryDatasource {
         body: json.encode(data),
       );
 
-      debugPrint('🟠 [REGISTER RESPONSE] Status: ${response.statusCode}');
-      debugPrint('🟠 [REGISTER RESPONSE] Body: ${response.body}');
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = json.decode(response.body);
 
         int? newId;
 
-        // Intentamos extraer el ID de varias ubicaciones posibles en la respuesta
         if (jsonResponse['product'] != null && jsonResponse['product']['id'] != null) {
           newId = int.tryParse(jsonResponse['product']['id'].toString());
         } else if (jsonResponse['data'] != null && jsonResponse['data']['id'] != null) {

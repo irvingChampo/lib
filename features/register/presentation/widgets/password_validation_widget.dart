@@ -1,8 +1,5 @@
-// features/register/presentation/widgets/password_validation_widget.dart (NUEVO ARCHIVO)
-
 import 'package:flutter/material.dart';
 
-// Controlador para comunicar el estado de validación al formulario padre.
 class PasswordValidationController extends ChangeNotifier {
   bool _isPasswordValid = false;
 
@@ -31,7 +28,6 @@ class PasswordValidationWidget extends StatefulWidget {
 }
 
 class _PasswordValidationWidgetState extends State<PasswordValidationWidget> {
-  // Banderas para cada una de las reglas de validación
   bool _hasMinLength = false;
   bool _hasUppercase = false;
   bool _hasLowercase = false;
@@ -41,7 +37,6 @@ class _PasswordValidationWidgetState extends State<PasswordValidationWidget> {
   @override
   void initState() {
     super.initState();
-    // Escuchamos los cambios en el campo de texto de la contraseña
     widget.passwordController.addListener(_validatePassword);
   }
 
@@ -62,7 +57,6 @@ class _PasswordValidationWidgetState extends State<PasswordValidationWidget> {
       _hasSpecialChar = password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'));
     });
 
-    // Notificamos al controlador si todas las reglas se cumplen
     final allValid = _hasMinLength && _hasUppercase && _hasLowercase && _hasNumber && _hasSpecialChar;
     widget.validationController.updateValidation(allValid);
   }
@@ -85,7 +79,6 @@ class _PasswordValidationWidgetState extends State<PasswordValidationWidget> {
     );
   }
 
-  // Widget para construir cada fila de la lista de validación
   Widget _buildValidationRow(String text, bool isValid) {
     final color = isValid ? Colors.green : Colors.red;
     return Row(

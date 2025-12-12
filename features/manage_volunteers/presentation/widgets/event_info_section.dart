@@ -7,7 +7,7 @@ class EventInfoSection extends StatelessWidget {
   final String monthYear;
   final String startTime;
   final String endTime;
-  final String location; // Ahora usaremos esto para "Detalles"
+  final String location;
   final int coordinators;
   final int volunteers;
 
@@ -84,13 +84,12 @@ class EventInfoSection extends StatelessWidget {
             const Divider(height: 1),
             const SizedBox(height: 16),
 
-            // --- CAMBIO AQUÍ: Cambiamos "Donde:" por "Detalles:" ---
             _buildRichText('Detalles:\n', location, textTheme),
 
             const SizedBox(height: 16),
             _buildRichText(
               'Capacidad de voluntarios:\n',
-              '$volunteers Voluntarios requeridos', // Simplificamos para mostrar el total
+              '$volunteers Voluntarios requeridos',
               textTheme,
             ),
           ],
@@ -102,7 +101,7 @@ class EventInfoSection extends StatelessWidget {
   Widget _buildRichText(String title, String body, TextTheme textTheme) {
     return RichText(
       text: TextSpan(
-        style: textTheme.bodyMedium?.copyWith(color: Colors.black87), // Aseguramos color legible
+        style: textTheme.bodyMedium?.copyWith(color: Colors.black87),
         children: [
           TextSpan(text: title, style: const TextStyle(fontWeight: FontWeight.bold)),
           TextSpan(text: body),

@@ -25,23 +25,17 @@ class _DonationDialogState extends State<DonationDialog> {
   }
 
   void _handleDonate() async {
-    // 1. Validar formulario
     if (!(_formKey.currentState?.validate() ?? false)) return;
 
-    // 2. Obtener valores
     final amount = double.tryParse(_amountController.text) ?? 0.0;
     final description = _descriptionController.text.trim();
 
-    // 3. Llamar al provider
-    // Usamos read porque es una acción única, no escuchamos cambios aquí
     final paymentProvider = context.read<PaymentProvider>();
 
-    // Guardamos referencias para usar después del await
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
     final theme = Theme.of(context);
 
-    // Ejecutar donación
     final success = await paymentProvider.makeDonation(
       kitchenId: widget.kitchenId,
       amount: amount,
@@ -51,9 +45,8 @@ class _DonationDialogState extends State<DonationDialog> {
     if (!mounted) return;
 
     if (success) {
-      navigator.pop(); // Cerrar el diálogo
+      navigator.pop();
 
-      // Mostrar feedback discreto
       messenger.showSnackBar(
         SnackBar(
           content: const Text('Redirigiendo a la pasarela de pago...'),
@@ -62,7 +55,6 @@ class _DonationDialogState extends State<DonationDialog> {
         ),
       );
     } else {
-      // Mostrar error si falló
       messenger.showSnackBar(
         SnackBar(
           content: Text(paymentProvider.errorMessage ?? 'Error al procesar donación'),
@@ -75,7 +67,6 @@ class _DonationDialogState extends State<DonationDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Usamos watch para reconstruir el widget si cambia isLoading
     final provider = context.watch<PaymentProvider>();
 
     return Dialog(
@@ -88,7 +79,6 @@ class _DonationDialogState extends State<DonationDialog> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // --- Título ---
               Text(
                 'Realizar Donación',
                 style: theme.textTheme.headlineSmall?.copyWith(
@@ -105,7 +95,6 @@ class _DonationDialogState extends State<DonationDialog> {
               ),
               const SizedBox(height: 24),
 
-              // --- Campo de Monto ---
               Text(
                 'Monto a donar (MXN)',
                 style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -114,7 +103,6 @@ class _DonationDialogState extends State<DonationDialog> {
               TextFormField(
                 controller: _amountController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                // Permite solo números y hasta 2 decimales
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                 ],
@@ -143,7 +131,6 @@ class _DonationDialogState extends State<DonationDialog> {
 
               const SizedBox(height: 16),
 
-              // --- Campo de Descripción (Opcional) ---
               Text(
                 'Mensaje (Opcional)',
                 style: theme.textTheme.labelLarge?.copyWith(fontWeight: FontWeight.bold),
@@ -167,7 +154,6 @@ class _DonationDialogState extends State<DonationDialog> {
 
               const SizedBox(height: 32),
 
-              // --- Botones de Acción ---
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

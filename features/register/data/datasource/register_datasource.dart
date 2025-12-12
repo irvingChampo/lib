@@ -58,14 +58,12 @@ class RegisterDatasourceImpl implements RegisterDatasource {
 
   @override
   Future<List<SkillModel>> getSkills() async {
-    // --- INICIO DE LA CORRECCIÓN ---
-    // Se reemplaza la lista local por una llamada real a la API.
+
     final url = Uri.parse('$_apiUrl/skills');
     try {
       final response = await client.get(url);
       if (response.statusCode == 200) {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
-        // La respuesta de la API tiene los datos dentro de una clave "data".
         final List<dynamic> data = jsonResponse['data'];
         return data.map((json) => SkillModel.fromJson(json)).toList();
       } else {
@@ -74,7 +72,6 @@ class RegisterDatasourceImpl implements RegisterDatasource {
     } catch (e) {
       throw NetworkException('Error de red al obtener las habilidades');
     }
-    // --- FIN DE LA CORRECCIÓN ---
   }
 
   @override

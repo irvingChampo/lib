@@ -28,7 +28,6 @@ class _RegisterPurchaseScreenState extends State<RegisterPurchaseScreen> {
             Text('Detalles de la Compra', style: textTheme.headlineMedium),
             const SizedBox(height: 32),
 
-            // --- Formulario refactorizado con widgets ---
             PurchaseFormField(label: 'Fecha de compra', hint: 'mm/dd/yyyy', readOnly: true, onTap: () {}),
             const PurchaseFormField(label: 'Proveedor', hint: 'Ej. Chedraui'),
             PurchaseFormField(
@@ -75,7 +74,6 @@ class _RegisterPurchaseScreenState extends State<RegisterPurchaseScreen> {
             ],
           ),
         ),
-        // Aquí iría la lista de productos agregados.
       ],
     );
   }

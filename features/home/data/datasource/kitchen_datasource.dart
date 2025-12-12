@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-// Eliminamos import de core/network/http_client.dart
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_detail_model.dart';
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_model.dart';
 import 'package:bienestar_integral_app/features/home/data/models/kitchen_subscription_model.dart';
@@ -22,9 +21,6 @@ abstract class KitchenDatasource {
 class KitchenDatasourceImpl implements KitchenDatasource {
   final http.Client client;
 
-  // MODIFICACIÓN: Inyección obligatoria.
-  // Nota: Esto es compatible con el código existente en otras features no migradas
-  // siempre y cuando pasen el cliente (ej: KitchenDatasourceImpl(client: http.Client()))
   KitchenDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -45,9 +41,6 @@ class KitchenDatasourceImpl implements KitchenDatasource {
     if (apiUrl.endsWith('/')) apiUrl = apiUrl.substring(0, apiUrl.length - 1);
     return apiUrl;
   }
-
-  // ... (El resto de métodos se mantienen IGUALES)
-  // Copia el contenido de los métodos de tu archivo original.
 
   @override
   Future<List<KitchenModel>> getNearbyKitchens() async {

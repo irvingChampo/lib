@@ -19,7 +19,6 @@ class KitchenActionBar extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Color amarillo suavizado para modo oscuro
     final primarySoft = isDark ? colors.primary.withOpacity(0.8) : colors.primary;
 
     return Container(
@@ -37,7 +36,6 @@ class KitchenActionBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Botón Donar (Outline)
           Expanded(
             child: OutlinedButton.icon(
               onPressed: isLoading ? null : onDonate,
@@ -55,7 +53,6 @@ class KitchenActionBar extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          // Botón Inscribirse / Cancelar (Sólido)
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -73,7 +70,6 @@ class KitchenActionBar extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: isLoading ? null : onSubscribe,
                 style: ElevatedButton.styleFrom(
-                  // Usamos el amarillo suavizado (primarySoft) si no está suscrito
                   backgroundColor: isSubscribed ? colors.error : primarySoft,
 
                   foregroundColor: isSubscribed ? colors.onError : colors.onPrimary,

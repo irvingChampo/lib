@@ -31,7 +31,6 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
     });
   }
 
-  // Función para limpiar la hora (quitar segundos extra :00)
   String _formatTime(String time) {
     if (time.length > 5) {
       return time.substring(0, 5);

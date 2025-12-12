@@ -1,5 +1,3 @@
-// features/home/presentation/providers/home_provider.dart (NUEVO)
-
 import 'package:bienestar_integral_app/core/error/exception.dart';
 import 'package:bienestar_integral_app/features/home/data/datasource/kitchen_datasource.dart';
 import 'package:bienestar_integral_app/features/home/data/repository/kitchen_repository_impl.dart';

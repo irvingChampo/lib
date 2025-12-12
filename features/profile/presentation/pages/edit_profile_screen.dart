@@ -78,11 +78,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
-  // --- NUEVA FUNCIÓN PARA EL REFRESH ---
   Future<void> _handleRefresh() async {
-    // 1. Volvemos a pedir los datos a la API
     await context.read<ProfileProvider>().fetchProfile();
-    // 2. Rellenamos el formulario de nuevo con los datos frescos
     if (mounted) {
       _populateForm();
     }
@@ -374,12 +371,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Column(
             children: [
               Expanded(
-                // --- CAMBIO PRINCIPAL: AGREGADO REFRESH INDICATOR ---
                 child: RefreshIndicator(
                   onRefresh: _handleRefresh,
-                  color: theme.colorScheme.primary, // Color del spinner
+                  color: theme.colorScheme.primary,
                   child: SingleChildScrollView(
-                    // physics necesario para que funcione el pull incluso si hay poco contenido
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
@@ -392,7 +387,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // --- SECCIÓN DE INFORMACIÓN BÁSICA ---
 
                               ProfileTextField(
                                 label: 'Correo electrónico',
@@ -469,7 +463,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                               const SizedBox(height: 32),
 
-                              // --- SECCIÓN DE HABILIDADES ---
                               Text('Habilidades', style: theme.textTheme.titleLarge),
                               const SizedBox(height: 4),
                               Text('Selecciona al menos una.', style: theme.textTheme.bodySmall),
@@ -485,7 +478,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
                               const SizedBox(height: 32),
 
-                              // --- SECCIÓN DE DISPONIBILIDAD ---
                               Text('Disponibilidad', style: theme.textTheme.titleLarge),
                               const SizedBox(height: 16),
                               ListView.separated(

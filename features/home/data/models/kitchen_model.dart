@@ -1,5 +1,3 @@
-// features/home/data/models/kitchen_model.dart (CORREGIDO Y MÁS ROBUSTO)
-
 import 'package:bienestar_integral_app/features/home/domain/entities/kitchen.dart';
 
 const _sampleImageUrls = [
@@ -22,8 +20,6 @@ class KitchenModel extends Kitchen {
   factory KitchenModel.fromJson(Map<String, dynamic> json) {
     final imageUrl = _sampleImageUrls[json['id'] % _sampleImageUrls.length];
 
-    // --- INICIO DE LA CORRECCIÓN ---
-    // Hacemos el parseo de la ubicación de forma segura, proveyendo valores por defecto si no existe.
     int stateId = 0;
     int municipalityId = 0;
 
@@ -31,7 +27,6 @@ class KitchenModel extends Kitchen {
       stateId = json['location']['state_id'] ?? 0;
       municipalityId = json['location']['municipality_id'] ?? 0;
     }
-    // --- FIN DE LA CORRECCIÓN ---
 
     return KitchenModel(
       id: json['id'] ?? 0,

@@ -35,7 +35,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
   @override
   void initState() {
     super.initState();
-    // Pre-llenar datos
     _nameController = TextEditingController(text: widget.event.name);
     _descriptionController = TextEditingController(text: widget.event.description);
     _dateController = TextEditingController(text: widget.event.eventDate);
@@ -44,7 +43,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
     _capacityController = TextEditingController(text: widget.event.maxCapacity.toString());
     _dinersController = TextEditingController(text: (widget.event.expectedDiners ?? 0).toString());
 
-    // Validar que el tipo exista en la lista, si no, usar el primero
     _selectedEventType = widget.event.eventType ?? 'comida';
     if (!_eventTypes.contains(_selectedEventType)) {
       _selectedEventType = 'comida';
@@ -83,7 +81,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
   }
 
   Future<void> _selectTime(bool isStart) async {
-    // Parsear hora actual del texto para el picker
     TimeOfDay initialTime = TimeOfDay.now();
     try {
       final text = isStart ? _startTimeController.text : _endTimeController.text;
@@ -135,10 +132,9 @@ class _EditEventScreenState extends State<EditEventScreen> {
             builder: (_) => SuccessDialog(
               message: '¡Evento actualizado!',
               onClose: () {
-                context.pop(); // Cierra Dialog
-                context.pop(); // Regresa al detalle
-                context.pop(); // Regresa al home (para refrescar)
-                // O usa context.go(AppRoutes.adminHomePath) para forzar recarga
+                context.pop();
+                context.pop();
+                context.pop();
               },
             ),
           );

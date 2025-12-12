@@ -14,7 +14,6 @@ enum EventsStatus { initial, loading, success, error }
 class EventsProvider extends ChangeNotifier {
   late final GetEventsByKitchen _getEventsByKitchen;
   late final RegisterToEvent _registerToEvent;
-  // Nuevos casos de uso para manejar el estado completo
   late final GetMyEventRegistrations _getMyEventRegistrations;
   late final UnregisterFromEvent _unregisterFromEvent;
 
@@ -22,10 +21,8 @@ class EventsProvider extends ChangeNotifier {
   String? _errorMessage;
   List<Event> _events = [];
 
-  // Para saber qué evento se está procesando actualmente
   int? _processingEventId;
 
-  // Lista local de IDs de eventos inscritos
   Set<int> _registeredEventIds = {};
 
   EventsProvider() {
@@ -52,8 +49,6 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // 1. Cargamos los eventos de la cocina
-      // 2. Y TAMBIÉN cargamos mis registros actuales para saber en cuáles estoy
       final results = await Future.wait([
         _getEventsByKitchen(kitchenId),
         _getMyEventRegistrations(),
@@ -62,7 +57,6 @@ class EventsProvider extends ChangeNotifier {
       _events = results[0] as List<Event>;
       final myRegistrations = results[1] as List<dynamic>;
 
-      // Actualizamos el Set con los IDs que vienen del servidor
       _registeredEventIds = myRegistrations.map((r) => r.eventId as int).toSet();
 
       _status = EventsStatus.success;
@@ -79,7 +73,6 @@ class EventsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Inscribirse
   Future<bool> joinEvent(int eventId) async {
     _processingEventId = eventId;
     _errorMessage = null;
@@ -87,7 +80,7 @@ class EventsProvider extends ChangeNotifier {
 
     try {
       await _registerToEvent(eventId);
-      _registeredEventIds.add(eventId); // Agregamos al Set local
+      _registeredEventIds.add(eventId);
       return true;
     } on ServerException catch (e) {
       _errorMessage = e.message;
@@ -102,7 +95,6 @@ class EventsProvider extends ChangeNotifier {
     return false;
   }
 
-  // Cancelar (NUEVO MÉTODO)
   Future<bool> leaveEvent(int eventId) async {
     _processingEventId = eventId;
     _errorMessage = null;
@@ -110,7 +102,7 @@ class EventsProvider extends ChangeNotifier {
 
     try {
       await _unregisterFromEvent(eventId);
-      _registeredEventIds.remove(eventId); // Eliminamos del Set local
+      _registeredEventIds.remove(eventId);
       return true;
     } on ServerException catch (e) {
       _errorMessage = e.message;

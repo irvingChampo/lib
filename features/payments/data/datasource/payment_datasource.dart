@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-// Ya no necesitamos core/network/http_client.dart
 import 'package:bienestar_integral_app/features/payments/data/models/payment_intent_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,7 +17,6 @@ abstract class PaymentDatasource {
 class PaymentDatasourceImpl implements PaymentDatasource {
   final http.Client client;
 
-  // MODIFICACIÓN: Inyección explícita por constructor
   PaymentDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -39,7 +37,6 @@ class PaymentDatasourceImpl implements PaymentDatasource {
     required double amount,
     String? description,
   }) async {
-    // ... (El resto del código del método se mantiene igual, no cambia la lógica)
     var apiUrl = dotenv.env['API_URL'];
 
     if (apiUrl == null || apiUrl.isEmpty) {
@@ -51,10 +48,6 @@ class PaymentDatasourceImpl implements PaymentDatasource {
     }
 
     final url = Uri.parse('$apiUrl/payments/$kitchenId/create-intent');
-
-    debugPrint('--------------------------------------------------');
-    debugPrint(' INTENTANDO PAGO A: $url');
-    debugPrint('--------------------------------------------------');
 
     try {
       final headers = await _getHeaders();

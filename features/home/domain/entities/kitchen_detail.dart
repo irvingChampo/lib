@@ -18,7 +18,7 @@ class KitchenDetail {
   final Location location;
   final bool isSubscribed;
   final List<Schedule> schedules;
-  final String ownerName; // <-- NUEVO CAMPO
+  final String ownerName;
 
   KitchenDetail({
     required this.id,
@@ -30,6 +30,6 @@ class KitchenDetail {
     required this.location,
     this.isSubscribed = false,
     required this.schedules,
-    required this.ownerName, // <-- NUEVO
+    required this.ownerName,
   });
 }

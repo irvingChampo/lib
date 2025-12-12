@@ -1,5 +1,3 @@
-// features/register/presentation/widgets/privacy_notice_widget.dart (NUEVO ARCHIVO)
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,7 +24,6 @@ class _PrivacyNoticeWidgetState extends State<PrivacyNoticeWidget> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri);
     } else {
-      // ignore: avoid_print
       print('Could not launch $url');
     }
   }

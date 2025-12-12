@@ -15,7 +15,6 @@ class EmptyStateWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Se obtiene el colorScheme para usar colores semánticos.
     final colors = theme.colorScheme;
 
     return Center(
@@ -24,14 +23,12 @@ class EmptyStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // CAMBIO: Se usa un color del tema en lugar de un gris específico.
-            Icon(icon, size: 80, color: colors.surfaceVariant), // ANTES: Colors.grey.shade400
+            Icon(icon, size: 80, color: colors.surfaceVariant),
             const SizedBox(height: 16),
             Text(
               title,
               style: theme.textTheme.titleMedium?.copyWith(
-                // CAMBIO: Se usa un color del tema.
-                color: colors.onSurfaceVariant, // ANTES: Colors.grey.shade600
+                color: colors.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -40,8 +37,7 @@ class EmptyStateWidget extends StatelessWidget {
               subtitle,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyMedium?.copyWith(
-                // CAMBIO: Se usa un color del tema.
-                color: colors.outline, // ANTES: Colors.grey.shade500
+                color: colors.outline,
               ),
             ),
           ],

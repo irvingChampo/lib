@@ -7,11 +7,11 @@ class ProductManagement {
   Future<void> register({
     required int kitchenId,
     required String name,
-    required String description, // (+)
+    required String description,
     required int categoryId,
     required String unit,
     required bool perishable,
-    int? shelfLifeDays, // (+)
+    int? shelfLifeDays,
   }) async {
     await repository.registerProduct(
       kitchenId: kitchenId,

@@ -18,7 +18,7 @@ class Donor {
 
 class Transaction {
   final String id;
-  final String monto; // String formateado del JSON "$500.00 MXN"
+  final String monto;
   final Donor donador;
   final String concepto;
   final String estado;

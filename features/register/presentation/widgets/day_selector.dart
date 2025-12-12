@@ -30,8 +30,7 @@ class DaySelector extends StatelessWidget {
             decoration: BoxDecoration(
               color: isSelected ? colors.primary : Colors.transparent,
               border: Border.all(
-                // CAMBIO: Se usan colores del tema.
-                color: isSelected ? colors.primary : colors.outline, // ANTES: Colors.grey.shade400
+                color: isSelected ? colors.primary : colors.outline,
                 width: 1.5,
               ),
               shape: BoxShape.circle,
@@ -40,7 +39,6 @@ class DaySelector extends StatelessWidget {
               child: Text(
                 day,
                 style: theme.textTheme.labelLarge?.copyWith(
-                  // CAMBIO: Se usan colores del tema.
                   color: isSelected ? colors.onPrimary : colors.onSurfaceVariant, // ANTES: Colors.grey.shade600
                 ),
               ),

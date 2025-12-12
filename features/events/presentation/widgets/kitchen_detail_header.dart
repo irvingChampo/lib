@@ -16,7 +16,7 @@ class KitchenDetailHeader extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return SizedBox(
-      height: 280, // Altura más generosa como en el HTML
+      height: 280,
       child: Stack(
         children: [
           // 1. Imagen de Fondo con Hero Animation

@@ -3,20 +3,16 @@ import 'package:bienestar_integral_app/features/home/domain/entities/kitchen.dar
 import 'package:bienestar_integral_app/features/home/domain/entities/kitchen_detail.dart';
 import 'package:bienestar_integral_app/features/home/domain/entities/kitchen_subscription.dart';
 import 'package:bienestar_integral_app/features/home/domain/repository/kitchen_repository.dart';
-// ... imports
 
 class KitchenRepositoryImpl implements KitchenRepository {
   final KitchenDatasource datasource;
   KitchenRepositoryImpl({required this.datasource});
-
-  // ... (otros métodos) ...
 
   @override
   Future<List<Schedule>> getKitchenSchedules(int kitchenId) async {
     return await datasource.getKitchenSchedules(kitchenId);
   }
 
-  // ... (asegúrate que estén todos los demás métodos implementados)
   @override
   Future<KitchenDetail> getMyKitchen() async => await datasource.getMyKitchen();
   @override

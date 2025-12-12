@@ -18,7 +18,7 @@ class CustomDrawer extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Drawer(
-      backgroundColor: Colors.transparent, // Transparente para respetar bordes
+      backgroundColor: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
           color: colorScheme.surface,
@@ -29,10 +29,8 @@ class CustomDrawer extends StatelessWidget {
         ),
         child: Column(
           children: [
-            // 1. Cabecera personalizada
             const DrawerCustomHeader(),
 
-            // 2. Lista de Opciones
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.symmetric(vertical: 10),
@@ -42,7 +40,6 @@ class CustomDrawer extends StatelessWidget {
                     text: 'Inicio',
                     onTap: () {
                       Navigator.pop(context);
-                      // Si ya estás en home, no hace falta navegar
                     },
                   ),
                   DrawerMenuItem(
@@ -76,14 +73,12 @@ class CustomDrawer extends StatelessWidget {
                     child: Divider(color: colorScheme.outline.withOpacity(0.2)),
                   ),
 
-                  // --- AQUÍ ESTÁ LA MAGIA ---
                   DrawerMenuItem(
                     icon: Icons.help_outline,
                     text: 'Ayuda y soporte',
                     onTap: () {
-                      Navigator.pop(context); // 1. Cerrar el menú lateral
+                      Navigator.pop(context);
 
-                      // 2. Abrir el modal bonito con la info de la UPChiapas
                       InfoModal.show(
                         context,
                         title: 'Ayuda y Soporte',
@@ -91,12 +86,10 @@ class CustomDrawer extends StatelessWidget {
                       );
                     },
                   ),
-                  // --------------------------
                 ],
               ),
             ),
 
-            // 3. Botón Salir
             DrawerLogoutButton(
               onTap: () {
                 Navigator.pop(context);

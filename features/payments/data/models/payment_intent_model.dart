@@ -7,8 +7,6 @@ class PaymentIntentModel extends PaymentIntent {
 
   factory PaymentIntentModel.fromJson(Map<String, dynamic> json) {
     return PaymentIntentModel(
-      // Según el JSON proporcionado, la URL viene dentro de data: { url: "..." }
-      // El datasource extraerá 'data', así que aquí leemos 'url'.
       paymentUrl: json['url'] ?? '',
     );
   }

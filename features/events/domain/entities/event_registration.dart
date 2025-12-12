@@ -4,7 +4,7 @@ class EventRegistration {
   final int id;
   final int eventId;
   final String registrationType;
-  final Event? event; // Puede venir anidado según el endpoint
+  final Event? event;
 
   EventRegistration({
     required this.id,

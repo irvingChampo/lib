@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 enum InventoryStatus { initial, loading, success, error }
 
 class InventoryProvider extends ChangeNotifier {
-  // MODIFICACIÓN: Dependencias inyectadas
   final GetKitchenInventory _getKitchenInventory;
   final ProductManagement _productManagement;
   final ManageProductStock _manageProductStock;
@@ -30,7 +29,6 @@ class InventoryProvider extends ChangeNotifier {
   List<Category> _categories = [];
   List<Unit> _units = [];
 
-  // MODIFICACIÓN: Constructor con inyección
   InventoryProvider({
     required GetKitchenInventory getKitchenInventory,
     required ProductManagement productManagement,
@@ -158,14 +156,6 @@ class InventoryProvider extends ChangeNotifier {
 
   Future<bool> editProduct({required int kitchenId, required int productId, required String name, required String description, required String unit}) async {
     try {
-      // Nota: Aquí se accedía al repo a través del caso de uso. Al ser inyectado,
-      // el caso de uso debería exponer este método o tener otro caso de uso 'UpdateProduct'.
-      // Para mantener compatibilidad rápida, asumiremos que ProductManagement tiene acceso
-      // o el repositorio es público.
-      // MEJOR PRÁCTICA: Inyectar UpdateProductUseCase.
-      // AJUSTE RÁPIDO: Acceder al repositorio del caso de uso (si es publico) o actualizar repository en UseCase.
-
-      // Como ProductManagement tiene 'repository' público (en tu código original lo definiste así: final InventoryRepository repository;), esto funcionará:
       await _productManagement.repository.updateProduct(kitchenId: kitchenId, productId: productId, name: name, description: description, unit: unit);
 
       await loadInventory(kitchenId);

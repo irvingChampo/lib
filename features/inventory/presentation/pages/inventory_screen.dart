@@ -64,7 +64,6 @@ class _InventoryScreenState extends State<InventoryScreen> {
     );
   }
 
-  // (+) Método Actualizado con Descripción
   void _showEditProductDialog(int productId, String currentName, String currentDesc, String currentUnit) {
     final nameCtrl = TextEditingController(text: currentName);
     final descCtrl = TextEditingController(text: currentDesc); // (+)
@@ -95,7 +94,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       kitchenId: kitchenId,
                       productId: productId,
                       name: nameCtrl.text.trim(),
-                      description: descCtrl.text.trim(), // (+)
+                      description: descCtrl.text.trim(),
                       unit: unitCtrl.text.trim()
                   );
                 }

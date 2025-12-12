@@ -19,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Llamamos a la carga de datos cuando el widget se inicializa
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeProvider>().fetchNearbyKitchens();
     });
@@ -29,14 +28,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final homeProvider = context.watch<HomeProvider>();
-    final colors = Theme.of(context).colorScheme; // Necesario para los colores del tema
+    final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: const HomeAppBar(title: 'Bienestar Integral'),
       drawer: const CustomDrawer(),
       body: RefreshIndicator(
         onRefresh: () async => await context.read<HomeProvider>().fetchNearbyKitchens(),
-        color: colors.primary, // Spinner amarillo
+        color: colors.primary,
         child: _buildBody(homeProvider, textTheme, colors),
       ),
     );
@@ -54,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Text(
               provider.errorMessage ?? 'Ocurrió un error',
               textAlign: TextAlign.center,
-              style: TextStyle(color: colors.onBackground), // Texto visible en ambos temas
+              style: TextStyle(color: colors.onBackground),
             ),
           ),
         );
@@ -73,7 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
         return ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            // Cabecera de Texto
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -81,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   'Cocinas Disponibles',
                   style: textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
-                    // CORRECCIÓN: Usa el color del fondo (negro en claro, blanco en oscuro)
                     color: colors.onBackground,
                   ),
                 ),
@@ -89,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'Aportar te da vida',
                   style: textTheme.bodyLarge?.copyWith(
-                    // CORRECCIÓN: Usa un color secundario legible en ambos modos
                     color: colors.onSurfaceVariant,
                   ),
                 ),
@@ -98,7 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 24),
 
-            // Lista de Tarjetas
             ...provider.kitchens.map((kitchen) {
               return KitchenCard(
                 kitchen: kitchen,
@@ -117,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: colorScheme.surface, // Fondo del modal adaptable
+      backgroundColor: colorScheme.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -133,10 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: colorScheme.primary, // Amarillo siempre
+                      color: colorScheme.primary,
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    // Icono negro siempre sobre el amarillo
                     child: Icon(Icons.restaurant, color: colorScheme.onPrimary),
                   ),
                   const SizedBox(width: 16),
@@ -147,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           kitchen.name,
                           style: textTheme.titleLarge?.copyWith(
-                            color: colorScheme.onSurface, // Texto adaptable
+                            color: colorScheme.onSurface,
                           ),
                         ),
                       ],
@@ -159,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 'Descripción',
                 style: textTheme.titleMedium?.copyWith(
-                  color: colorScheme.onSurface, // Texto adaptable
+                  color: colorScheme.onSurface,
                 ),
               ),
               const SizedBox(height: 8),
@@ -167,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 kitchen.description,
                 style: textTheme.bodyMedium?.copyWith(
                   height: 1.4,
-                  color: colorScheme.onSurfaceVariant, // Texto secundario adaptable
+                  color: colorScheme.onSurfaceVariant,
                 ),
               ),
               const SizedBox(height: 24),
@@ -177,7 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: OutlinedButton(
                       onPressed: () => Navigator.pop(context),
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: colorScheme.onSurface, // Borde/Texto adaptable
+                        foregroundColor: colorScheme.onSurface,
                         side: BorderSide(color: colorScheme.outline),
                       ),
                       child: const Text('Cerrar'),
@@ -188,7 +182,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pop(context);
-                        // Pasamos el ID de la cocina a la siguiente pantalla
                         context.push(
                           '${AppRoutes.eventDetailsPath}/${kitchen.id}',
                           extra: kitchen.toDisplayData(),

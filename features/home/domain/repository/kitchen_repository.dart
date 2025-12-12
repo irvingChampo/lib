@@ -6,7 +6,7 @@ abstract class KitchenRepository {
   Future<List<Kitchen>> getNearbyKitchens();
   Future<KitchenDetail> getKitchenDetails(int kitchenId);
   Future<KitchenDetail> getMyKitchen();
-  Future<List<Schedule>> getKitchenSchedules(int kitchenId); // <-- NUEVO
+  Future<List<Schedule>> getKitchenSchedules(int kitchenId);
   Future<void> subscribeToKitchen(int kitchenId);
   Future<void> unsubscribeFromKitchen(int kitchenId);
   Future<List<int>> getSubscribedKitchenIds();

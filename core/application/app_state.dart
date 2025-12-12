@@ -18,7 +18,7 @@ class AppState extends ChangeNotifier {
   Future<void> checkAuthStatus() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('accessToken');
-    final storedRole = prefs.getString('userRole'); // Recuperamos el rol guardado
+    final storedRole = prefs.getString('userRole');
 
     if (token == null || storedRole == null) {
       _authStatus = AuthStatus.unauthenticated;
@@ -26,7 +26,6 @@ class AppState extends ChangeNotifier {
     } else {
       _authStatus = AuthStatus.authenticated;
 
-      // Restauramos el rol basado en lo que guardamos en el Login
       if (storedRole == 'admin') {
         _userRole = UserRole.admin;
       } else {

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 enum ScheduleStatus { initial, loading, success, error }
 
 class KitchenScheduleProvider extends ChangeNotifier {
-  // MODIFICACIÓN: Dependencia inyectada
   final CreateKitchenSchedules _createKitchenSchedules;
 
   ScheduleStatus _status = ScheduleStatus.initial;
@@ -17,7 +16,6 @@ class KitchenScheduleProvider extends ChangeNotifier {
   TimeOfDay? weekendStart;
   TimeOfDay? weekendEnd;
 
-  // MODIFICACIÓN: Constructor recibe el caso de uso
   KitchenScheduleProvider(this._createKitchenSchedules);
 
   ScheduleStatus get status => _status;
@@ -55,7 +53,6 @@ class KitchenScheduleProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Usamos la instancia inyectada
       await _createKitchenSchedules(
         kitchenId: kitchenId,
         weekStart: _formatTime(weekStart!),

@@ -10,7 +10,6 @@ class ThemeProvider extends ChangeNotifier {
     _loadTheme();
   }
 
-  // Cargar el tema guardado al iniciar la app
   Future<void> _loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
     final themeString = prefs.getString('theme_mode') ?? 'system';
@@ -25,7 +24,6 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cambiar el tema y guardarlo en memoria
   Future<void> setTheme(ThemeMode mode) async {
     _themeMode = mode;
     notifyListeners();
@@ -38,7 +36,6 @@ class ThemeProvider extends ChangeNotifier {
     await prefs.setString('theme_mode', value);
   }
 
-  // Texto para mostrar en la pantalla de ajustes
   String get themeName {
     switch (_themeMode) {
       case ThemeMode.light:

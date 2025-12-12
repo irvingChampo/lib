@@ -1,5 +1,3 @@
-// features/auth/presentation/widgets/custom_text_field.dart (ACTUALIZADO)
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,7 +10,6 @@ class CustomTextField extends StatefulWidget {
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final AutovalidateMode? autovalidateMode;
-  // --- CAMBIO: Se añade la propiedad hintText ---
   final String? hintText;
 
   const CustomTextField({
@@ -25,7 +22,7 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType,
     this.inputFormatters,
     this.autovalidateMode,
-    this.hintText, // Se añade al constructor
+    this.hintText,
   });
 
   @override
@@ -59,7 +56,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
           inputFormatters: widget.inputFormatters,
           autovalidateMode: widget.autovalidateMode,
           decoration: InputDecoration(
-            // --- CAMBIO: Se pasa el hintText a la decoración ---
             hintText: widget.hintText,
             prefixIcon: Icon(widget.icon, size: 20),
             suffixIcon: widget.isPassword

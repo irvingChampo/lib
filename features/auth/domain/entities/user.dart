@@ -3,7 +3,6 @@ class User {
   final String email;
   final String names;
 
-  // CAMPOS QUE AHORA SERÁN OPCIONALES
   final String? firstLastName;
   final String? secondLastName;
   final String? phoneNumber;
@@ -12,7 +11,6 @@ class User {
   final bool verifiedEmail;
   final bool verifiedPhone;
 
-  // El fullName del login es un campo extra, lo hacemos opcional también
   final String? fullName;
 
   User({
@@ -28,6 +26,5 @@ class User {
     this.fullName,
   });
 
-  // Getter para tener siempre un nombre completo disponible
   String get calculatedFullName => '$names ${firstLastName ?? ''} ${secondLastName ?? ''}'.trim();
 }

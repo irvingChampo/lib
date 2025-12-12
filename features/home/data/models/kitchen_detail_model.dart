@@ -1,6 +1,6 @@
 import 'package:bienestar_integral_app/features/home/data/models/location_model.dart';
 import 'package:bienestar_integral_app/features/home/domain/entities/kitchen_detail.dart';
-import 'package:flutter/foundation.dart'; // Para debugPrint
+import 'package:flutter/foundation.dart';
 
 class ScheduleModel extends Schedule {
   ScheduleModel({required super.day, required super.startTime, required super.endTime});
@@ -29,13 +29,11 @@ class KitchenDetailModel extends KitchenDetail {
   });
 
   factory KitchenDetailModel.fromJson(Map<String, dynamic> json) {
-    // 1. Determinar el nodo principal de la cocina
     Map<String, dynamic> kitchenData = {};
 
     if (json['kitchen'] != null && json['kitchen'] is Map) {
       kitchenData = json['kitchen'];
     } else {
-      // Si no hay llave "kitchen", asumimos que el JSON raíz son los datos
       kitchenData = json;
     }
 
@@ -43,31 +41,19 @@ class KitchenDetailModel extends KitchenDetail {
         ? kitchenData['location']
         : <String, dynamic>{};
 
-    // 2. BÚSQUEDA INTELIGENTE DE HORARIOS
     List<dynamic> rawSchedules = [];
 
     if (kitchenData['schedules'] != null && kitchenData['schedules'] is List) {
       rawSchedules = kitchenData['schedules'];
     } else if (kitchenData['schedule'] != null && kitchenData['schedule'] is List) {
-      // Por si el backend usa singular
       rawSchedules = kitchenData['schedule'];
     } else if (json['schedules'] != null && json['schedules'] is List) {
-      // Por si vienen fuera del objeto kitchen
       rawSchedules = json['schedules'];
     }
 
-    // --- DEBUG LOG PARA ENCONTRAR EL ERROR ---
-    debugPrint('🔍 [MODELO] Nombre Cocina: ${kitchenData['name']}');
-    debugPrint('🔍 [MODELO] Horarios encontrados en JSON: ${rawSchedules.length}');
-    if (rawSchedules.isEmpty) {
-      debugPrint('⚠️ [MODELO] ALERTA: La lista de horarios está vacía en el JSON.');
-      debugPrint('⚠️ [MODELO] Llaves disponibles en data: ${kitchenData.keys.toList()}');
-    }
-    // -----------------------------------------
 
     var schedulesList = rawSchedules.map((i) => ScheduleModel.fromJson(i)).toList();
 
-    // 3. Mapeo del dueño
     String parsedOwnerName = 'Administrador';
     if (kitchenData['responsible'] != null && kitchenData['responsible'] is Map) {
       final resp = kitchenData['responsible'];

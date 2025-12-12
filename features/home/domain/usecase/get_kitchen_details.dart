@@ -1,5 +1,3 @@
-// features/home/domain/usecase/get_kitchen_details.dart (NUEVO)
-
 import 'package:bienestar_integral_app/features/home/domain/entities/kitchen_detail.dart';
 import 'package:bienestar_integral_app/features/home/domain/repository/kitchen_repository.dart';
 

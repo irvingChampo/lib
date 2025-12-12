@@ -31,7 +31,6 @@ class _AddProductScreenState extends State<AddProductScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      // Cargar categorías y UNIDADES al iniciar la pantalla
       final provider = context.read<InventoryProvider>();
       provider.loadCategories();
       provider.loadUnits();
@@ -218,26 +217,22 @@ class _AddProductScreenState extends State<AddProductScreen> {
               Text('Unidad de medida', style: textTheme.titleSmall),
               const SizedBox(height: 8),
 
-              // --- DROPDOWN MEJORADO PARA UNIDADES ---
               DropdownButtonFormField<String>(
                 value: _selectedUnitKey,
-                // Si la lista está vacía, mostramos texto de carga
                 hint: Text(
                   units.isEmpty ? 'Cargando unidades...' : 'Seleccionar...',
                   style: TextStyle(color: units.isEmpty ? Colors.grey : null),
                 ),
-                // Deshabilitado si no hay datos
                 onChanged: units.isEmpty ? null : (v) => setState(() => _selectedUnitKey = v),
 
                 items: units.map((Unit u) {
                   return DropdownMenuItem<String>(
-                    value: u.key, // Enviar clave al back
-                    child: Text('${u.label} (${u.key})'), // Mostrar etiqueta bonita
+                    value: u.key,
+                    child: Text('${u.label} (${u.key})'),
                   );
                 }).toList(),
 
                 decoration: InputDecoration(
-                  // Spinner pequeño a la derecha si está cargando
                   suffixIcon: units.isEmpty
                       ? const Padding(
                     padding: EdgeInsets.all(12.0),

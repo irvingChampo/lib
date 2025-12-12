@@ -1,5 +1,3 @@
-// features/auth/data/datasource/auth_datasource.dart (ACTUALIZADO)
-
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
 import 'package:bienestar_integral_app/core/network/http_client.dart';
@@ -39,24 +37,19 @@ class AuthDatasourceImpl implements AuthDatasource {
         final Map<String, dynamic> jsonResponse = json.decode(response.body);
         return AuthResponseModel.fromJson(jsonResponse['data']);
       } else {
-        // --- LÓGICA DE MANEJO DE ERRORES MEJORADA ---
         if (response.statusCode == 401) {
-          // Si el error es 401, es un problema de credenciales.
           throw InvalidCredentialsException('Correo o contraseña incorrectos.');
         } else {
-          // Para cualquier otro error del servidor (500, 404, etc.), usamos la excepción genérica.
           final Map<String, dynamic> errorResponse = json.decode(response.body);
           final errorMessage = errorResponse['message'] ?? 'Error desconocido del servidor';
           throw ServerException(errorMessage);
         }
-        // --- FIN DE LA MEJORA ---
       }
     } on InvalidCredentialsException {
-      rethrow; // Re-lanzamos la excepción específica para que el provider la atrape.
+      rethrow;
     } on ServerException {
-      rethrow; // Re-lanzamos la excepción de servidor.
+      rethrow;
     } catch (e) {
-      // Si hay un error en la conexión (no llega al servidor), es un NetworkException.
       throw NetworkException('No se pudo conectar al servidor. Revisa tu conexión a internet.');
     }
   }

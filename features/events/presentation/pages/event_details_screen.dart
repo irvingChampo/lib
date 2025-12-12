@@ -168,15 +168,13 @@ class _EventDetailsScreenState extends State<EventDetailsScreen> {
               Text('Descripción', style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
               const SizedBox(height: 8),
 
-              // --- CORRECCIÓN AQUÍ: Color adaptable para el texto ---
               Text(
                   kitchen?.description ?? widget.initialData?['description'] ?? '...',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                       height: 1.6,
-                      color: colors.onSurfaceVariant // Antes era Colors.black54 (fijo)
+                      color: colors.onSurfaceVariant
                   )
               ),
-              // -----------------------------------------------------
 
               const SizedBox(height: 24),
               Divider(color: colors.primary.withOpacity(0.5), thickness: 1),

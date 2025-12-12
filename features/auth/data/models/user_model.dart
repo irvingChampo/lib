@@ -19,7 +19,6 @@ class UserModel extends User {
       id: json['id'],
       email: json['email'],
       names: json['names'],
-      // Estos campos pueden ser nulos, así que no hay problema si no vienen en el JSON
       firstLastName: json['firstLastName'],
       secondLastName: json['secondLastName'],
       phoneNumber: json['phoneNumber'],

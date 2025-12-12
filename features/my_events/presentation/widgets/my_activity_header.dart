@@ -14,8 +14,8 @@ class MyActivityHeader extends StatelessWidget implements PreferredSizeWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            colors.primary, // Amarillo #FFD700
-            colors.primaryContainer, // Amarillo Naranja #FFA500 (aprox)
+            colors.primary,
+            colors.primaryContainer,
           ],
         ),
         boxShadow: [
@@ -31,7 +31,6 @@ class MyActivityHeader extends StatelessWidget implements PreferredSizeWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            // Parte Superior: Botón Atrás + Título
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Row(
@@ -70,7 +69,7 @@ class MyActivityHeader extends StatelessWidget implements PreferredSizeWidget {
               unselectedLabelColor: Colors.black54,
               labelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               indicatorSize: TabBarIndicatorSize.tab,
-              dividerColor: Colors.transparent, // Quitar línea gris por defecto
+              dividerColor: Colors.transparent,
               tabs: const [
                 Tab(text: 'Mis Eventos'),
                 Tab(text: 'Mis Cocinas'),
@@ -83,5 +82,5 @@ class MyActivityHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(130); // Altura estimada Header + Tabs
+  Size get preferredSize => const Size.fromHeight(130);
 }

@@ -1,5 +1,3 @@
-// features/auth/presentation/pages/login_screen.dart (ACTUALIZADO)
-
 import 'package:bienestar_integral_app/core/router/routes.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/providers/auth_provider.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/custom_button.dart';
@@ -8,7 +6,6 @@ import 'package:bienestar_integral_app/features/auth/presentation/widgets/forgot
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/login_header.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/logo_avatar.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/register_link.dart';
-// --- CAMBIO: Importamos los nuevos validadores ---
 import 'package:bienestar_integral_app/shared/validators/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +68,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: 'Correo electrónico',
                   icon: Icons.email_outlined,
                   keyboardType: TextInputType.emailAddress,
-                  // --- CAMBIO: Se utiliza el nuevo validador de email ---
                   validator: AppValidators.emailValidator,
                 ),
                 const SizedBox(height: 20),
@@ -80,7 +76,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   label: 'Contraseña',
                   icon: Icons.lock_outline,
                   isPassword: true,
-                  // --- CAMBIO: Se utiliza el nuevo validador de contraseña ---
                   validator: AppValidators.passwordValidator,
                 ),
                 const SizedBox(height: 12),

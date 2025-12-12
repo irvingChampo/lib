@@ -6,25 +6,21 @@ enum ChefStatus { idle, loading, success, error }
 
 class ChatMessage {
   final String text;
-  final bool isUser; // true = Yo, false = Chef IA
+  final bool isUser;
   final DateTime timestamp;
 
   ChatMessage({required this.text, required this.isUser, required this.timestamp});
 }
 
 class ChefProvider extends ChangeNotifier {
-  // MODIFICACIÓN: La dependencia es final y se inyecta
   final AskChef _askChef;
 
   ChefStatus _status = ChefStatus.idle;
   String? _errorMessage;
 
-  // Historial del chat
   final List<ChatMessage> _messages = [];
 
-  // MODIFICACIÓN: Constructor recibe el caso de uso
   ChefProvider(this._askChef) {
-    // Mensaje de bienvenida inicial
     _messages.add(ChatMessage(
       text: "¡Hola! Soy tu Chef IA. 🧑‍🍳\nPregúntame qué podemos cocinar con el inventario actual.",
       isUser: false,
@@ -48,7 +44,6 @@ class ChefProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Usamos la instancia inyectada
       final answer = await _askChef(kitchenId, question);
 
       _messages.add(ChatMessage(

@@ -16,7 +16,6 @@ class VerificationBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Si está cargando (ej. enviando el correo), mostramos un spinner pequeño
     if (isLoading) {
       return const Padding(
         padding: EdgeInsets.only(top: 8.0),

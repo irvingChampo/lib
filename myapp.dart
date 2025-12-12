@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: appRouter.router,
 
-      // --- ESTAS LÍNEAS SE COMENTAN O BORRAN ---
+      // --- Comentar para cargar en el telefono ---
         locale: DevicePreview.locale(context),
         builder: DevicePreview.appBuilder,
       // -----------------------------------------

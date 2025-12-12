@@ -9,7 +9,6 @@ class AppTheme {
     textTheme: appTextTheme,
     scaffoldBackgroundColor: lightColorScheme.background, // Fondo blanco
 
-    // CAMBIO: Asegura que el AppBar use el amarillo primario.
     appBarTheme: AppBarTheme(
       backgroundColor: lightColorScheme.primary, // Amarillo
       foregroundColor: lightColorScheme.onPrimary, // Negro
@@ -23,7 +22,6 @@ class AppTheme {
       ),
     ),
 
-    // CAMBIO: Asegura que los botones elevados usen el amarillo primario.
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: lightColorScheme.primary, // Amarillo
@@ -37,7 +35,6 @@ class AppTheme {
       ),
     ),
 
-    // Estilos para otros componentes
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.grey.shade100, // Un gris muy claro para los campos de texto

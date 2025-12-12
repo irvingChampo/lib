@@ -3,12 +3,11 @@ class Event {
   final int kitchenId;
   final String name;
   final String description;
-  final String eventDate; // Formato YYYY-MM-DD
-  final String startTime; // Formato HH:mm
-  final String endTime;   // Formato HH:mm
+  final String eventDate;
+  final String startTime;
+  final String endTime;
   final int maxCapacity;
 
-  // Nuevos campos para Admin (pueden ser nulos si vienen de una vista simple)
   final String? eventType;
   final int? expectedDiners;
   final String? status;

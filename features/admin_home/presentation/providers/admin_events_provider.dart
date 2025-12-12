@@ -132,7 +132,6 @@ class AdminEventsProvider extends ChangeNotifier {
     }
   }
 
-  // --- NUEVO MÉTODO: EDITAR EVENTO ---
   Future<bool> editEvent({
     required int eventId,
     required int kitchenId,
@@ -162,7 +161,6 @@ class AdminEventsProvider extends ChangeNotifier {
 
       await _updateEvent(eventId, eventData);
 
-      // Recargamos la lista para ver los cambios reflejados
       await loadKitchenEvents(kitchenId);
 
       _status = AdminEventStatus.success;

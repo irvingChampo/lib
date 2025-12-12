@@ -1,5 +1,3 @@
-// features/register/presentation/widgets/custom_dropdown.dart (ACTUALIZADO)
-
 import 'package:flutter/material.dart';
 
 class CustomDropdown<T> extends StatelessWidget {
@@ -11,7 +9,6 @@ class CustomDropdown<T> extends StatelessWidget {
   final Function(T?) onChanged;
   final String? Function(T?)? validator;
   final Widget Function(T) itemBuilder;
-  // --- CAMBIO: Añadimos la propiedad autovalidateMode ---
   final AutovalidateMode? autovalidateMode;
 
   const CustomDropdown({
@@ -24,16 +21,14 @@ class CustomDropdown<T> extends StatelessWidget {
     required this.itemBuilder,
     this.value,
     this.validator,
-    this.autovalidateMode, // Se añade al constructor
+    this.autovalidateMode,
   });
 
   @override
   Widget build(BuildContext context) {
-    // ... (build method content remains the same until DropdownButtonFormField)
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ... (Text widget for label)
         const SizedBox(height: 8),
         DropdownButtonFormField<T>(
           value: value,
@@ -46,7 +41,6 @@ class CustomDropdown<T> extends StatelessWidget {
           }).toList(),
           onChanged: onChanged,
           validator: validator,
-          // --- CAMBIO: Se aplica el autovalidateMode al Dropdown ---
           autovalidateMode: autovalidateMode,
           decoration: InputDecoration(
             prefixIcon: Icon(icon, size: 20),

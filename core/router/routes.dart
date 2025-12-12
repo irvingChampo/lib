@@ -1,7 +1,4 @@
-// core/router/routes.dart (MODIFICADO)
-
 class AppRoutes {
-  // Nombres de rutas para GoRouter
   static const String login = 'login';
   static const String registerStep1 = 'register-step1';
   static const String registerStep3 = 'register-step3';
@@ -12,7 +9,7 @@ class AppRoutes {
   static const String myEvents = 'my-events';
   static const String settings = 'settings';
   static const String kitchenSchedule = 'kitchen-schedule';
-  static const String editEvent = 'edit-event'; // Nuevo
+  static const String editEvent = 'edit-event';
 
   static const String adminHome = 'admin-home';
   static const String manageVolunteers = 'manage-volunteers';
@@ -24,7 +21,6 @@ class AppRoutes {
   static const String accountStatus = 'account-status';
   static const String chefIa = 'chef-ia';
 
-  // Paths para GoRouter
   static const String loginPath = '/login';
   static const String registerStep1Path = '/register-step1';
   static const String registerStep3Path = '/register-step3';
@@ -36,7 +32,6 @@ class AppRoutes {
   static const String settingsPath = '/settings';
   static const String kitchenSchedulePath = '/kitchen-schedule';
   static const String editEventPath = '/edit-event';
-
 
   static const String adminHomePath = '/admin-home';
   static const String manageVolunteersPath = '/manage-volunteers';

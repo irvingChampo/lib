@@ -32,25 +32,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
       btnOkText: 'Eliminar',
       btnOkColor: Colors.red,
       btnOkOnPress: () async {
-        // Obtenemos los providers
         final profileProvider = context.read<ProfileProvider>();
         final appState = context.read<AppState>();
 
-        // Llamada al backend para eliminar
         final success = await profileProvider.deleteUserAccount();
 
         if (!mounted) return;
 
         if (success) {
-          // Si el servidor confirma el borrado, cerramos sesión localmente
-          // Esto disparará la redirección automática al Login
+
           appState.logout();
 
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Tu cuenta ha sido eliminada correctamente.')),
           );
         } else {
-          // Si falla, mostramos el mensaje de error del backend
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(profileProvider.errorMessage ?? 'Error al eliminar cuenta'),
@@ -116,7 +112,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
           const SettingsSectionHeader(title: 'Cuenta'),
 
-          // Botón conectado
           SettingsOptionCard(
             icon: Icons.delete_forever,
             title: 'Eliminar cuenta',

@@ -19,25 +19,20 @@ class DrawerLogoutButton extends StatelessWidget {
           top: BorderSide(color: colors.outline.withOpacity(0.1)),
         ),
       ),
-      // CAMBIO: Usamos Material widget para el color de fondo.
-      // Esto permite que el InkWell pinte el efecto "hover" sobre el rojo.
+
       child: Material(
-        color: colors.error, // Rojo base
+        color: colors.error,
         borderRadius: BorderRadius.circular(16),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(16),
 
-          // --- CONFIGURACIÓN DE COLORES DE INTERACCIÓN ---
-          // Color cuando el cursor pasa por encima (Hover)
           hoverColor: Colors.red.shade900,
-          // Color cuando se presiona (Splash/Highlight)
           splashColor: Colors.white.withOpacity(0.2),
           highlightColor: Colors.white.withOpacity(0.1),
 
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-            // Nota: Ya no ponemos 'decoration' aquí para no tapar el efecto del InkWell
             child: const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

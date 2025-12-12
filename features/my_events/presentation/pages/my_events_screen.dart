@@ -20,15 +20,13 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
   @override
   void initState() {
     super.initState();
-    // Cargamos AMBAS listas al iniciar la pantalla
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final provider = context.read<MyEventsProvider>();
-      provider.fetchMySubscriptions(); // Pestaña 2 (Cocinas)
-      provider.fetchMyRegistrations(); // Pestaña 1 (Eventos)
+      provider.fetchMySubscriptions();
+      provider.fetchMyRegistrations();
     });
   }
 
-  // --- LÓGICA PARA CANCELAR ASISTENCIA (Eventos) ---
   void _handleCancelRegistration(int eventId) {
     showDialog(
       context: context,
@@ -101,7 +99,6 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
     );
   }
 
-  // --- PESTAÑA 1: EVENTOS ---
   Widget _buildEventsTab() {
     final provider = context.watch<MyEventsProvider>();
 
@@ -131,7 +128,6 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
     );
   }
 
-  // --- PESTAÑA 2: COCINAS (CORREGIDO PARA ACTUALIZAR AL VOLVER) ---
   Widget _buildKitchensTab() {
     final provider = context.watch<MyEventsProvider>();
 
@@ -155,14 +151,10 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
         return SubscribedKitchenCard(
           kitchen: subscription.kitchen,
           onTap: () async {
-            // 1. Navegamos y ESPERAMOS (await) a que el usuario regrese de la pantalla de detalles
             await context.push(
               '${AppRoutes.eventDetailsPath}/${subscription.kitchen.id}',
               extra: subscription.kitchen.toDisplayData(),
             );
-
-            // 2. Si el código llega aquí, es porque el usuario presionó "Atrás".
-            // Recargamos la lista inmediatamente para reflejar si se desuscribió.
             if (context.mounted) {
               context.read<MyEventsProvider>().fetchMySubscriptions();
             }

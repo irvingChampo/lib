@@ -21,20 +21,17 @@ class InventoryRepositoryImpl implements InventoryRepository {
     int? shelfLifeDays,
     double initialQuantity = 0,
   }) async {
-    // 1. Construir JSON conforme a tu todo.json
     final data = {
       "name": name,
-      "description": description, // Se envía tal cual
+      "description": description,
       "categoryId": categoryId,
       "unit": unit,
       "perishable": perishable,
       "shelfLifeDays": perishable ? shelfLifeDays : null
     };
 
-    // 2. Registrar y obtener ID
     final newProductId = await datasource.registerProduct(kitchenId, data);
 
-    // 3. Si hay cantidad inicial, agregar stock inmediatamente
     if (initialQuantity > 0) {
       await datasource.addStock(kitchenId, newProductId, initialQuantity);
     }
@@ -42,7 +39,6 @@ class InventoryRepositoryImpl implements InventoryRepository {
     return newProductId;
   }
 
-  // ... (Resto de métodos sin cambios) ...
   @override
   Future<List<Unit>> getUnits() async => await datasource.getUnits();
 

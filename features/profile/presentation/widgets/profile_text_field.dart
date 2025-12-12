@@ -10,7 +10,7 @@ class ProfileTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final List<TextInputFormatter>? inputFormatters;
-  final bool readOnly; // <-- NUEVA PROPIEDAD
+  final bool readOnly;
 
   const ProfileTextField({
     super.key,
@@ -22,7 +22,7 @@ class ProfileTextField extends StatelessWidget {
     this.validator,
     this.autovalidateMode,
     this.inputFormatters,
-    this.readOnly = false, // <-- VALOR POR DEFECTO
+    this.readOnly = false,
   });
 
   @override
@@ -47,7 +47,7 @@ class ProfileTextField extends StatelessWidget {
           validator: validator,
           autovalidateMode: autovalidateMode,
           inputFormatters: inputFormatters,
-          readOnly: readOnly, // <-- SE APLICA AQUÍ
+          readOnly: readOnly,
           style: TextStyle(
             color: readOnly ? colors.onSurface.withOpacity(0.6) : colors.onSurface,
           ),
@@ -56,7 +56,7 @@ class ProfileTextField extends StatelessWidget {
             hintText: hintText,
             hintStyle: theme.textTheme.bodyMedium?.copyWith(color: colors.onSurfaceVariant),
             filled: true,
-            fillColor: readOnly ? colors.surfaceVariant.withOpacity(0.3) : null, // Fondo diferente si es readOnly
+            fillColor: readOnly ? colors.surfaceVariant.withOpacity(0.3) : null,
           ),
         ),
       ],

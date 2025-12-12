@@ -28,8 +28,7 @@ class SuccessDialog extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                // CAMBIO: Se usa el color `primary` del tema en lugar de un verde hardcodeado.
-                color: colors.primary.withOpacity(0.2), // ANTES: const Color(0xFF4CAF50).withOpacity(0.2)
+                color: colors.primary.withOpacity(0.2),
                 shape: BoxShape.circle,
               ),
               child: Icon(Icons.check, size: 50, color: colors.primary), // ANTES: const Color(0xFF4CAF50)

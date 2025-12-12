@@ -20,22 +20,17 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     final colors = Theme.of(context).colorScheme;
 
     return AppBar(
-      // --- CAMBIO VISUAL: Color sólido uniforme ---
-      // Antes era Colors.transparent y se usaba flexibleSpace con degradado.
-      // Ahora usamos directamente el color primario (Amarillo).
+
       backgroundColor: colors.primary,
 
       elevation: 0,
       centerTitle: true,
 
-      // Forzamos iconos y texto a color definido en onPrimary (generalmente Negro sobre Amarillo)
       iconTheme: IconThemeData(color: colors.onPrimary),
       titleTextStyle: Theme.of(context).textTheme.titleLarge?.copyWith(
         color: colors.onPrimary,
         fontWeight: FontWeight.bold,
       ),
-
-      // --- CAMBIO VISUAL: Se eliminó la sección flexibleSpace que contenía el degradado ---
 
       leading: showBackButton
           ? IconButton(

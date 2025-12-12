@@ -25,7 +25,7 @@ class _ChefIaScreenState extends State<ChefIaScreen> {
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent + 100, // +100 para asegurar
+        _scrollController.position.maxScrollExtent + 100,
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOut,
       );
@@ -36,7 +36,6 @@ class _ChefIaScreenState extends State<ChefIaScreen> {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
 
-    // Obtener el ID de la cocina del Admin Provider
     final adminProvider = context.read<AdminHomeProvider>();
     final kitchenId = adminProvider.kitchen?.id;
 
@@ -47,11 +46,9 @@ class _ChefIaScreenState extends State<ChefIaScreen> {
       return;
     }
 
-    // Enviar mensaje
     context.read<ChefProvider>().sendMessage(text, kitchenId);
     _controller.clear();
 
-    // Scrollear hacia abajo después de que la UI se actualice
     WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
   }
 
@@ -74,7 +71,6 @@ class _ChefIaScreenState extends State<ChefIaScreen> {
       ),
       body: Column(
         children: [
-          // --- ÁREA DE CHAT ---
           Expanded(
             child: ListView.builder(
               controller: _scrollController,
@@ -106,7 +102,6 @@ class _ChefIaScreenState extends State<ChefIaScreen> {
               ),
             ),
 
-          // --- INPUT ---
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(

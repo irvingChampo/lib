@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EventCardAdmin extends StatelessWidget {
-  final String title; // <-- CAMBIO: Antes era eventNumber
+  final String title;
   final String description;
   final String date;
   final String currentCount;
@@ -9,7 +9,7 @@ class EventCardAdmin extends StatelessWidget {
 
   const EventCardAdmin({
     super.key,
-    required this.title, // <-- CAMBIO
+    required this.title,
     required this.description,
     required this.date,
     required this.currentCount,
@@ -34,9 +34,9 @@ class EventCardAdmin extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded( // Agregamos Expanded para evitar desbordamiento si el nombre es largo
+                Expanded(
                   child: Text(
-                    title, // <-- CAMBIO: Muestra el nombre real (ej: "Cena de navidad")
+                    title,
                     style: textTheme.titleLarge?.copyWith(
                       color: colors.onPrimary,
                       fontWeight: FontWeight.bold,

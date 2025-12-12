@@ -1,8 +1,5 @@
-// shared/validators/validators.dart (CÓDIGO COMPLETO Y FINAL)
-
 class AppValidators {
   /// Validador para correos electrónicos.
-  ///
   /// Verifica que el campo no esté vacío y que tenga un formato de email válido.
   static String? emailValidator(String? value) {
     if (value == null || value.trim().isEmpty) {
@@ -19,9 +16,7 @@ class AppValidators {
   }
 
   /// Validador para contraseñas con reglas de seguridad específicas.
-  ///
   /// Nota: Este es el validador simple para el formulario. La validación visual
-  /// se maneja con un widget separado.
   static String? passwordValidator(String? value) {
     if (value == null || value.isEmpty) {
       return 'Por favor, ingresa tu contraseña.';

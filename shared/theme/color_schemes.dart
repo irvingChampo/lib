@@ -35,7 +35,7 @@ const lightColorScheme = ColorScheme(
 // Paleta Oscura (CORREGIDA)
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
-  primary: Color(0xFFFFD700), // Mantenemos tu Amarillo semilla
+  primary: Color(0xFFFFD700), // Mantenemos el Amarillo semilla
   onPrimary: Color(0xFF3F2E00), // Texto oscuro sobre el amarillo
   primaryContainer: Color(0xFF5A4400),
   onPrimaryContainer: Color(0xFFFFE086),

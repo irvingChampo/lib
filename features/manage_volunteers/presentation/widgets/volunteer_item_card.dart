@@ -5,7 +5,6 @@ class VolunteerItemCard extends StatelessWidget {
   final double reputation;
   final String? avatarUrl;
   final VoidCallback onViewProfile;
-  // final VoidCallback onAssignRole;
 
   const VolunteerItemCard({
     super.key,
@@ -13,7 +12,6 @@ class VolunteerItemCard extends StatelessWidget {
     required this.reputation,
     this.avatarUrl,
     required this.onViewProfile,
-  //  required this.onAssignRole,
   });
 
   @override

@@ -35,7 +35,6 @@ class KitchenCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           child: Stack(
             children: [
-              // 1. IMAGEN DE FONDO
               Positioned.fill(
                 child: Image.network(
                   kitchen.imageUrl,
@@ -57,14 +56,13 @@ class KitchenCard extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Colors.black.withOpacity(0.8) // Sombra negra siempre
+                        Colors.black.withOpacity(0.8)
                       ],
                     ),
                   ),
                 ),
               ),
 
-              // 3. CONTENIDO (Texto e Iconos)
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
@@ -73,12 +71,9 @@ class KitchenCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        // Cajita del icono (tenedor/cuchillo)
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            // En modo oscuro se verá oscura, en claro blanca.
-                            // Esto está bien para la cajita.
                             color: colors.surface.withOpacity(0.9),
                             borderRadius: BorderRadius.circular(8),
                           ),
@@ -86,13 +81,10 @@ class KitchenCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
 
-                        // TÍTULO DE LA COCINA
                         Expanded(
                           child: Text(
                             kitchen.name,
                             style: textTheme.titleMedium?.copyWith(
-                              // CORRECCIÓN: SIEMPRE BLANCO
-                              // (porque está sobre fondo oscuro/imagen)
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 shadows: [
@@ -107,16 +99,14 @@ class KitchenCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
 
-                    // UBICACIÓN / DESCRIPCIÓN
                     Row(
                       children: [
-                        const Icon(Icons.location_on, size: 16, color: Colors.white70), // Icono blanco
+                        const Icon(Icons.location_on, size: 16, color: Colors.white70),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             kitchen.description,
                             style: textTheme.bodySmall?.copyWith(
-                              // CORRECCIÓN: SIEMPRE BLANCO
                               color: Colors.white,
                             ),
                             maxLines: 1,

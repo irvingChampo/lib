@@ -19,14 +19,12 @@ class KitchenScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      // MODIFICACIÓN: Usamos getIt para inyectar el UseCase
       create: (_) => KitchenScheduleProvider(getIt<CreateKitchenSchedules>()),
       child: _KitchenScheduleBody(kitchenId: kitchenId),
     );
   }
 }
 
-// ... (El resto del archivo _KitchenScheduleBody se mantiene igual) ...
 class _KitchenScheduleBody extends StatelessWidget {
   final int kitchenId;
   const _KitchenScheduleBody({required this.kitchenId});

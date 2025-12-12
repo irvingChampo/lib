@@ -28,8 +28,7 @@ class EventCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              // CAMBIO: Se usa el color `shadow` del tema.
-              color: colors.shadow.withOpacity(0.1), // ANTES: Colors.black.withOpacity(0.1)
+              color: colors.shadow.withOpacity(0.1),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -45,9 +44,8 @@ class EventCard extends StatelessWidget {
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      // CAMBIO: Se usan colores del tema.
-                      color: colors.surfaceVariant, // ANTES: Colors.grey.shade300
-                      child: Icon(Icons.image_not_supported, size: 50, color: colors.onSurfaceVariant), // ANTES: Colors.grey
+                      color: colors.surfaceVariant,
+                      child: Icon(Icons.image_not_supported, size: 50, color: colors.onSurfaceVariant),
                     );
                   },
                 ),
@@ -58,8 +56,7 @@ class EventCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      // CAMBIO: Se usa el color `shadow` del tema.
-                      colors: [Colors.transparent, colors.shadow.withOpacity(0.8)], // ANTES: Colors.black...
+                      colors: [Colors.transparent, colors.shadow.withOpacity(0.8)],
                     ),
                   ),
                 ),
@@ -75,8 +72,7 @@ class EventCard extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            // CAMBIO: Se usa el color `surface` del tema.
-                            color: colors.surface.withOpacity(0.9), // ANTES: Colors.white.withOpacity(0.9)
+                            color: colors.surface.withOpacity(0.9),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(Icons.restaurant, size: 20, color: colors.primary),
@@ -86,8 +82,7 @@ class EventCard extends StatelessWidget {
                           child: Text(
                             title,
                             style: textTheme.titleMedium?.copyWith(
-                              // CAMBIO: Se usa un color apropiado para texto sobre fondos oscuros.
-                              color: colors.onInverseSurface, // ANTES: Colors.white
+                              color: colors.onInverseSurface,
                               fontWeight: FontWeight.bold,
                             ),
                             maxLines: 1,
@@ -99,12 +94,12 @@ class EventCard extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        Icon(Icons.location_on, size: 16, color: colors.onInverseSurface), // ANTES: color: Colors.white
+                        Icon(Icons.location_on, size: 16, color: colors.onInverseSurface),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
                             location,
-                            style: textTheme.bodySmall?.copyWith(color: colors.onInverseSurface), // ANTES: color: Colors.white
+                            style: textTheme.bodySmall?.copyWith(color: colors.onInverseSurface),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),

@@ -5,8 +5,8 @@ class InventoryItemCard extends StatelessWidget {
   final InventoryItem item;
   final VoidCallback onAddStock;
   final VoidCallback onRemoveStock;
-  final VoidCallback onSetStock; // (+) Nuevo callback para fijar stock
-  final VoidCallback onEdit;     // (+) Nuevo callback para editar
+  final VoidCallback onSetStock;
+  final VoidCallback onEdit;
   final VoidCallback onDelete;
 
   const InventoryItemCard({
@@ -59,7 +59,6 @@ class InventoryItemCard extends StatelessWidget {
                       Text(item.product.name, style: textTheme.titleMedium),
                       const SizedBox(height: 4),
 
-                      // CANTIDAD CLICKEABLE (Funcionalidad Set Stock)
                       InkWell(
                         onTap: onSetStock,
                         borderRadius: BorderRadius.circular(8),
@@ -87,7 +86,6 @@ class InventoryItemCard extends StatelessWidget {
                   ),
                 ),
 
-                // Badge de Estado
                 Container(
                   margin: const EdgeInsets.only(right: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -101,7 +99,6 @@ class InventoryItemCard extends StatelessWidget {
                   ),
                 ),
 
-                // Menú de opciones (Editar / Eliminar)
                 PopupMenuButton<String>(
                   icon: const Icon(Icons.more_vert),
                   onSelected: (v) {

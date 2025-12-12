@@ -14,7 +14,6 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Se obtiene el colorScheme del tema actual.
     final colors = Theme.of(context).colorScheme;
 
     return SizedBox(
@@ -27,7 +26,6 @@ class CustomButton extends StatelessWidget {
           width: 24,
           child: CircularProgressIndicator(
             strokeWidth: 2.5,
-            // CAMBIO: Se usa el color `onPrimary` del tema.
             valueColor: AlwaysStoppedAnimation<Color>(colors.onPrimary), // ANTES: Colors.white
           ),
         )

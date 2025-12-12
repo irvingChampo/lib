@@ -32,29 +32,21 @@ class AuthProvider extends ChangeNotifier {
     try {
       final authResponse = await _loginUser(email, password);
 
-      // 1. Guardar Token
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('accessToken', authResponse.accessToken);
 
-      // 2. Determinar Rol basado en la respuesta JSON (ej: ["Voluntario"])
-      // Convertimos a minúsculas para comparar de forma segura
       bool isAdmin = false;
 
       if (authResponse.roles.isNotEmpty) {
-        // Buscamos si alguno de los roles contiene la palabra "admin"
         isAdmin = authResponse.roles.any((role) =>
             role.toString().toLowerCase().contains('admin')
         );
       }
 
-      // Definimos el UserRole interno
       final UserRole userRole = isAdmin ? UserRole.admin : UserRole.volunteer;
 
-      // 3. Guardar Rol en SharedPreferences (como string simple)
-      // Esto sirve para que AppState lo recupere al reiniciar la app
       await prefs.setString('userRole', isAdmin ? 'admin' : 'volunteer');
 
-      // 4. Actualizar el estado global de la App (esto dispara la redirección)
       _appState.login(userRole);
 
     } on InvalidCredentialsException catch (e) {

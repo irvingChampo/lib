@@ -48,7 +48,6 @@ class AdminTextField extends StatelessWidget {
           style: theme.textTheme.bodyMedium,
           decoration: InputDecoration(
             hintText: hint,
-            // El InputDecorationTheme global se encargará del resto
           ),
         ),
       ],

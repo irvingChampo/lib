@@ -34,7 +34,6 @@ class EventDetailScreen extends StatelessWidget {
           'date': 'Sin fecha',
         };
 
-    // Datos de ejemplo
     const location = 'Calzada al sumidero, enfrente Bodega Aurrera';
     const time = 'De 02:30 pm a 5:00 pm';
     const coordinators = '2 Coordinadores';

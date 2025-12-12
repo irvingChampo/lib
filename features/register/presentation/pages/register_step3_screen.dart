@@ -1,5 +1,3 @@
-// features/register/presentation/pages/register_step3_screen.dart (CÓDIGO COMPLETO Y CORREGIDO)
-
 import 'package:bienestar_integral_app/core/router/routes.dart';
 import 'package:bienestar_integral_app/features/auth/presentation/widgets/custom_button.dart';
 import 'package:bienestar_integral_app/features/register/presentation/providers/register_provider.dart';
@@ -25,18 +23,15 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
   };
   final List<String> _dayOrder = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
-  // --- MÉTODO _handleFinalize ACTUALIZADO CON VALIDACIONES COMPLETAS ---
   void _handleFinalize() {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    // 1. Validar las reglas de negocio (habilidades y horarios)
     final businessRuleError = _validateBusinessRules();
     if (businessRuleError != null) {
       _showErrorSnackBar(businessRuleError);
       return;
     }
 
-    // 2. Si todo es válido, guardar los datos y enviar
     final selectedSkillIds = _selectedSkills.entries
         .where((entry) => entry.value)
         .map((entry) => entry.key)
@@ -53,14 +48,11 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
     registerProvider.submitRegistration();
   }
 
-  // --- NUEVO MÉTODO PARA VALIDAR HABILIDADES Y DISPONIBILIDAD ---
   String? _validateBusinessRules() {
-    // Validar que al menos una habilidad esté seleccionada
     if (!_selectedSkills.containsValue(true)) {
       return 'Debes seleccionar al menos una habilidad.';
     }
 
-    // Validar que los horarios seleccionados sean coherentes
     for (final day in _dayOrder) {
       if (_daysSelected[day] ?? false) {
         final start = _startTimes[day];
@@ -77,10 +69,9 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
         }
       }
     }
-    return null; // Si no hay errores, retorna null
+    return null;
   }
 
-  // --- MÉTODO PARA MOSTRAR ERRORES EN UN SNACKBAR ---
   void _showErrorSnackBar(String message) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -110,7 +101,6 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (registerProvider.status == RegisterStatus.success) {
-        // Usamos context.go para limpiar la pila de navegación de registro
         context.go(AppRoutes.loginPath);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: const Text('¡Registro completado! Ya puedes iniciar sesión.'),
@@ -190,7 +180,6 @@ class _RegisterStep3ScreenState extends State<RegisterStep3Screen> {
   }
 }
 
-// Extensión para capitalizar la primera letra del día para mensajes de error
 extension StringExtension on String {
   String capitalize() {
     if (isEmpty) return this;

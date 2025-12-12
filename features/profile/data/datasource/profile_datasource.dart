@@ -15,13 +15,9 @@ abstract class ProfileDatasource {
   Future<void> createAvailabilitySlot(Map<String, dynamic> slotData);
   Future<void> updateAvailabilitySlot(String dayOfWeek, Map<String, dynamic> slotData);
   Future<void> removeAvailabilitySlot(String dayOfWeek);
-
-  // Métodos de Verificación
   Future<void> resendEmailVerification();
   Future<void> resendPhoneVerification();
   Future<void> verifyPhone(String code);
-
-  // (+) Método Eliminar Cuenta
   Future<void> deleteAccount();
 }
 

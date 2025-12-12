@@ -11,19 +11,15 @@ class DrawerCustomHeader extends StatelessWidget {
       height: 220,
       child: Stack(
         children: [
-          // Fondo Sólido (Coincide con HomeAppBar)
           Container(
             decoration: BoxDecoration(
-              // --- CAMBIO VISUAL: Color sólido en lugar de Gradient ---
               color: colors.primary,
 
-              // Mantenemos el borde redondeado solo en la esquina superior derecha
               borderRadius: const BorderRadius.only(
                 topRight: Radius.circular(30),
               ),
             ),
           ),
-          // Decoración circular (se mantiene para dar un poco de estilo sutil)
           Positioned(
             top: -50,
             right: -50,
@@ -36,7 +32,6 @@ class DrawerCustomHeader extends StatelessWidget {
               ),
             ),
           ),
-          // Contenido
           Positioned(
             bottom: 30,
             left: 24,
@@ -47,7 +42,7 @@ class DrawerCustomHeader extends StatelessWidget {
                   width: 70,
                   height: 70,
                   decoration: BoxDecoration(
-                    color: Colors.black, // Círculo negro
+                    color: Colors.black,
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
@@ -60,12 +55,10 @@ class DrawerCustomHeader extends StatelessWidget {
                   child: Icon(
                     Icons.person,
                     size: 35,
-                    color: colors.primary, // Icono amarillo
+                    color: colors.primary,
                   ),
                 ),
                 const SizedBox(height: 15),
-                // Texto sobre fondo amarillo -> Debe ser NEGRO (u onPrimary)
-                // Usamos onPrimary para asegurar consistencia con el tema
                 Text(
                   'Bienestar Integral',
                   style: TextStyle(

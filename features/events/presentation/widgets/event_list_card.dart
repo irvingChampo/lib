@@ -23,7 +23,6 @@ class EventListCard extends StatelessWidget {
     final colors = theme.colorScheme;
     final isDark = theme.brightness == Brightness.dark;
 
-    // Color suavizado para iconos y botones en modo oscuro
     final primarySoft = isDark ? colors.primary.withOpacity(0.8) : colors.primary;
 
     return Card(
@@ -102,7 +101,6 @@ class EventListCard extends StatelessWidget {
                   : ElevatedButton(
                 onPressed: isLoading ? null : onJoin,
                 style: ElevatedButton.styleFrom(
-                  // AQUÍ APLICAMOS EL COLOR SUAVIZADO
                   backgroundColor: primarySoft,
                   foregroundColor: colors.onPrimary,
                   elevation: 0,

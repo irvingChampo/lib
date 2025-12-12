@@ -13,7 +13,6 @@ class EventParticipantModel extends EventParticipant {
   });
 
   factory EventParticipantModel.fromJson(Map<String, dynamic> json) {
-    // Extraemos el objeto 'user' anidado según tu JSON
     final user = json['user'] ?? {};
 
     return EventParticipantModel(
@@ -22,11 +21,10 @@ class EventParticipantModel extends EventParticipant {
       registrationType: json['registrationType'] ?? 'volunteer',
       attended: json['attended'] ?? false,
 
-      // Mapeamos los datos que están DENTRO del objeto 'user'
       names: user['names'] ?? 'Usuario',
-      firstLastName: user['firstLastName'], // Puede ser null
+      firstLastName: user['firstLastName'],
       email: user['email'] ?? '',
-      phoneNumber: user['phoneNumber'], // Puede ser null
+      phoneNumber: user['phoneNumber'],
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:bienestar_integral_app/core/application/app_state.dart';
 import 'package:bienestar_integral_app/core/application/theme_provider.dart';
-import 'package:bienestar_integral_app/core/di/service_locator.dart'; // Importante: Service Locator
+import 'package:bienestar_integral_app/core/di/service_locator.dart';
 
 // Providers "Normales" (No migrados aún)
 import 'package:bienestar_integral_app/features/account_status/presentation/providers/account_status_provider.dart';
@@ -14,11 +14,9 @@ import 'package:bienestar_integral_app/features/profile/presentation/providers/p
 import 'package:bienestar_integral_app/features/register/presentation/providers/register_provider.dart';
 
 // --- FEATURES MIGRADAS CON GET_IT ---
-
 // 1. Chef IA
 import 'package:bienestar_integral_app/features/chef_ia/domain/usecase/ask_chef.dart';
 import 'package:bienestar_integral_app/features/chef_ia/presentation/providers/chef_provider.dart';
-
 // 2. Inventory & Add Product
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/create_category.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_categories.dart';
@@ -27,18 +25,14 @@ import 'package:bienestar_integral_app/features/inventory/domain/usecase/get_uni
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/manage_product_stock.dart';
 import 'package:bienestar_integral_app/features/inventory/domain/usecase/product_management.dart';
 import 'package:bienestar_integral_app/features/inventory/presentation/providers/inventory_provider.dart';
-
 // 3. My Events
 import 'package:bienestar_integral_app/features/events/domain/usecase/get_my_event_registrations.dart';
 import 'package:bienestar_integral_app/features/events/domain/usecase/unregister_from_event.dart';
 import 'package:bienestar_integral_app/features/home/domain/usecase/get_my_kitchen_subscriptions.dart';
 import 'package:bienestar_integral_app/features/my_events/presentation/provider/my_events_provider.dart';
-
 // 4. Payments
 import 'package:bienestar_integral_app/features/payments/domain/usecase/create_donation.dart';
 import 'package:bienestar_integral_app/features/payments/presentation/providers/payment_provider.dart';
-
-// Nota: KitchenScheduleProvider no está aquí porque se crea localmente en su pantalla.
 
 import 'package:bienestar_integral_app/myapp.dart';
 import 'package:device_preview/device_preview.dart';
@@ -61,7 +55,7 @@ Future<void> main() async {
       enabled: kDebugMode,
       builder: (context) => MultiProvider(
         providers: [
-          // --- BLOQUE 1: PROVIDERS GLOBALES ESTÁNDAR ---
+          // --- PROVIDERS GLOBALES ESTÁNDAR ---
           ChangeNotifierProvider(create: (_) => appState),
           ChangeNotifierProvider(create: (_) => ThemeProvider()),
           ChangeNotifierProvider(create: (_) => AuthProvider(appState)),
@@ -74,13 +68,11 @@ Future<void> main() async {
           ChangeNotifierProvider(create: (_) => AdminEventsProvider()),
           ChangeNotifierProvider(create: (_) => AccountStatusProvider()),
 
-          // --- BLOQUE 2: PROVIDERS MIGRADOS CON INYECCIÓN DE DEPENDENCIAS ---
-
+          // --- PROVIDERS MIGRADOS CON INYECCIÓN DE DEPENDENCIAS ---
           // Payments Feature
           ChangeNotifierProvider(
             create: (_) => PaymentProvider(getIt<CreateDonation>()),
           ),
-
           // My Events Feature
           ChangeNotifierProvider(
             create: (_) => MyEventsProvider(
@@ -89,8 +81,7 @@ Future<void> main() async {
               unregisterFromEvent: getIt<UnregisterFromEvent>(),
             ),
           ),
-
-          // Inventory & Add Product Feature
+          // Inventory y tambien Add Product Feature
           ChangeNotifierProvider(
             create: (_) => InventoryProvider(
               getKitchenInventory: getIt<GetKitchenInventory>(),
@@ -101,7 +92,6 @@ Future<void> main() async {
               getUnits: getIt<GetUnits>(),
             ),
           ),
-
           // Chef IA Feature
           ChangeNotifierProvider(
             create: (_) => ChefProvider(getIt<AskChef>()),

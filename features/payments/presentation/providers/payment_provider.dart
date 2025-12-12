@@ -7,13 +7,11 @@ import 'package:url_launcher/url_launcher.dart';
 enum PaymentStatus { initial, loading, success, error }
 
 class PaymentProvider extends ChangeNotifier {
-  // MODIFICACIÓN: Dependencia final e inyectada
   final CreateDonation _createDonation;
 
   PaymentStatus _status = PaymentStatus.initial;
   String? _errorMessage;
 
-  // MODIFICACIÓN: Constructor limpio
   PaymentProvider(this._createDonation);
 
   PaymentStatus get status => _status;
@@ -30,7 +28,6 @@ class PaymentProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      // Usamos la instancia inyectada
       final paymentIntent = await _createDonation(
         kitchenId: kitchenId,
         amount: amount,
@@ -60,7 +57,6 @@ class PaymentProvider extends ChangeNotifier {
     return false;
   }
 
-  // ... (El método _launchPaymentUrl se mantiene igual)
   Future<void> _launchPaymentUrl(String urlString) async {
     if (urlString.isEmpty) {
       throw ServerException("La URL de pago recibida no es válida.");

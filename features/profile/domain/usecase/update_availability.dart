@@ -1,6 +1,5 @@
 import 'package:bienestar_integral_app/features/profile/domain/repository/profile_repository.dart';
 
-// Caso de uso para establecer (crear) la disponibilidad de un día.
 class CreateAvailabilitySlot {
   final ProfileRepository repository;
 
@@ -11,7 +10,6 @@ class CreateAvailabilitySlot {
   }
 }
 
-// Caso de uso para actualizar la disponibilidad de un día existente.
 class UpdateAvailabilitySlot {
   final ProfileRepository repository;
 
@@ -22,7 +20,6 @@ class UpdateAvailabilitySlot {
   }
 }
 
-// Caso de uso para eliminar la disponibilidad de un solo día.
 class RemoveAvailabilitySlot {
   final ProfileRepository repository;
 

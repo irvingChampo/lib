@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-// Ya no necesitamos importar core/network/http_client.dart aquí para las nuevas features
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +13,6 @@ class ChefDatasourceImpl implements ChefDatasource {
   final http.Client client;
   final String? _apiUrl = dotenv.env['API_URL'];
 
-  // MODIFICACIÓN: Ahora el cliente es requerido y no se instancia internamente por defecto
   ChefDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -37,7 +35,7 @@ class ChefDatasourceImpl implements ChefDatasource {
 
     final url = Uri.parse('$baseUrl/chef/kitchens/$kitchenId/ask');
 
-    debugPrint('🤖 [CHEF IA] Preguntando: "$question" a Cocina ID: $kitchenId');
+    debugPrint(' [CHEF IA] Preguntando: "$question" a Cocina ID: $kitchenId');
 
     try {
       final headers = await _getHeaders();
@@ -45,7 +43,7 @@ class ChefDatasourceImpl implements ChefDatasource {
 
       final response = await client.post(url, headers: headers, body: body);
 
-      debugPrint('🤖 [CHEF IA] Status: ${response.statusCode}');
+      debugPrint(' [CHEF IA] Status: ${response.statusCode}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = json.decode(utf8.decode(response.bodyBytes));

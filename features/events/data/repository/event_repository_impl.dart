@@ -9,7 +9,6 @@ class EventRepositoryImpl implements EventRepository {
 
   EventRepositoryImpl({required this.datasource});
 
-  // Existentes
   @override
   Future<List<Event>> getEventsByKitchen(int kitchenId) async => await datasource.getEventsByKitchen(kitchenId);
   @override
@@ -18,8 +17,6 @@ class EventRepositoryImpl implements EventRepository {
   Future<List<EventRegistration>> getMyRegistrations() async => await datasource.getMyRegistrations();
   @override
   Future<void> unregisterFromEvent(int eventId) async => await datasource.unregisterFromEvent(eventId);
-
-  // Nuevos Admin
   @override
   Future<void> createEvent(Map<String, dynamic> eventData) async {
     await datasource.createEvent(eventData);

@@ -27,12 +27,9 @@ class ProfileProvider extends ChangeNotifier {
   late final CreateAvailabilitySlot _createAvailabilitySlot;
   late final UpdateAvailabilitySlot _updateAvailabilitySlot;
   late final RemoveAvailabilitySlot _removeAvailabilitySlot;
-
   late final ResendEmailVerification _resendEmailVerification;
   late final ResendPhoneVerification _resendPhoneVerification;
   late final VerifyPhone _verifyPhone;
-
-  // (+) NUEVO CASO DE USO
   late final DeleteAccount _deleteAccount;
 
   ProfileStatus _status = ProfileStatus.initial;
@@ -57,8 +54,6 @@ class ProfileProvider extends ChangeNotifier {
     _resendEmailVerification = ResendEmailVerification(repository);
     _resendPhoneVerification = ResendPhoneVerification(repository);
     _verifyPhone = VerifyPhone(repository);
-
-    // (+) Inicializar
     _deleteAccount = DeleteAccount(repository);
   }
 
@@ -290,7 +285,6 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // (+) Método público para eliminar cuenta
   Future<bool> deleteUserAccount() async {
     _status = ProfileStatus.loading;
     _errorMessage = null;

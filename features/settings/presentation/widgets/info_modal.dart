@@ -11,16 +11,15 @@ class InfoModal extends StatelessWidget {
     required this.content,
   });
 
-  // Método estático para mostrar el modal fácilmente desde cualquier lado
   static void show(BuildContext context, {required String title, required Widget content}) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // Permite altura personalizada
-      backgroundColor: Colors.transparent, // Transparente para que se vea el blur
-      barrierColor: Colors.black.withOpacity(0.5), // Oscurecimiento del 50%
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withOpacity(0.5),
       transitionAnimationController: AnimationController(
         vsync: Navigator.of(context),
-        duration: const Duration(milliseconds: 400), // Duración del deslizamiento
+        duration: const Duration(milliseconds: 400),
       ),
       builder: (context) => InfoModal(title: title, content: content),
     );
@@ -33,12 +32,11 @@ class InfoModal extends StatelessWidget {
 
     return Stack(
       children: [
-        // 1. Efecto Blur (Desenfoque) en el fondo
         Positioned.fill(
           child: GestureDetector(
-            onTap: () => Navigator.pop(context), // Cerrar al tocar fuera
+            onTap: () => Navigator.pop(context),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // Blur de 4px
+              filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
               child: Container(
                 color: Colors.transparent,
               ),
@@ -46,11 +44,10 @@ class InfoModal extends StatelessWidget {
           ),
         ),
 
-        // 2. El Modal en sí
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: size.height * 0.85, // 85% de la altura
+            height: size.height * 0.85,
             width: double.infinity,
             decoration: BoxDecoration(
               color: theme.colorScheme.surface,
@@ -63,15 +60,12 @@ class InfoModal extends StatelessWidget {
                 ),
               ],
             ),
-            // Usamos Column para dejar el Header Fijo y el Body con Scroll
             child: Column(
               children: [
-                // --- ENCABEZADO FIJO (Sticky) ---
                 _ModalHeader(title: title),
 
                 const Divider(height: 1),
 
-                // --- CONTENIDO CON SCROLL ---
                 Expanded(
                   child: SingleChildScrollView(
                     padding: const EdgeInsets.all(24),

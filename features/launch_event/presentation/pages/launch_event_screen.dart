@@ -19,7 +19,6 @@ class LaunchEventScreen extends StatefulWidget {
 class _LaunchEventScreenState extends State<LaunchEventScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // Controladores
   final _nameController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _dateController = TextEditingController();
@@ -30,7 +29,6 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
 
   DateTime? _selectedDate;
 
-  // Cambiado a 'comida' por defecto ya que sabemos que funciona en Postman
   String _selectedEventType = 'comida';
   final List<String> _eventTypes = ['comida', 'especial', 'diario', 'emergencia'];
 
@@ -56,7 +54,6 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
-        // Formato requerido: YYYY-MM-DD
         _dateController.text = DateFormat('yyyy-MM-dd').format(picked);
       });
     }
@@ -69,7 +66,6 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
     );
     if (picked != null) {
       setState(() {
-        // Formato requerido: HH:mm
         final formatted = '${picked.hour.toString().padLeft(2,'0')}:${picked.minute.toString().padLeft(2,'0')}';
         if (isStart) {
           _startTimeController.text = formatted;
@@ -83,7 +79,6 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
   void _handleLaunchEvent() async {
     if (_formKey.currentState?.validate() ?? false) {
 
-      // 1. Obtener ID de la cocina del usuario admin
       final adminHomeProvider = context.read<AdminHomeProvider>();
       final kitchenId = adminHomeProvider.kitchen?.id;
 
@@ -94,7 +89,6 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
         return;
       }
 
-      // 2. Llamar al provider de eventos para crear
       final adminEventsProvider = context.read<AdminEventsProvider>();
 
       final success = await adminEventsProvider.launchEvent(
@@ -107,7 +101,7 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
         maxCapacity: int.tryParse(_capacityController.text) ?? 10,
         expectedDiners: int.tryParse(_dinersController.text) ?? 0,
         eventType: _selectedEventType,
-        weatherCondition: 'Soleado', // Valor fijo para cumplir con el backend
+        weatherCondition: 'Soleado',
       );
 
       if (mounted) {
@@ -117,7 +111,7 @@ class _LaunchEventScreenState extends State<LaunchEventScreen> {
             barrierDismissible: false,
             builder: (_) => SuccessDialog(
               message: '¡Evento creado exitosamente!',
-              onClose: () => context.pop(), // Regresa al home
+              onClose: () => context.pop(),
             ),
           );
         } else {

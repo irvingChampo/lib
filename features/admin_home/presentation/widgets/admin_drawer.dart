@@ -26,7 +26,6 @@ class AdminDrawer extends StatelessWidget {
             ),
           ),
 
-          // Opciones del menú
           _buildDrawerItem(
             context,
             icon: Icons.inventory_2_outlined,
@@ -71,8 +70,7 @@ class AdminDrawer extends StatelessWidget {
                 },
                 borderRadius: BorderRadius.circular(16),
 
-                // --- CONFIGURACIÓN DE COLORES DE INTERACCIÓN ---
-                hoverColor: Colors.red.shade900, // Se oscurece al pasar el cursor
+                hoverColor: Colors.red.shade900,
                 splashColor: Colors.white.withOpacity(0.2),
                 highlightColor: Colors.white.withOpacity(0.1),
 
@@ -97,7 +95,6 @@ class AdminDrawer extends StatelessWidget {
               ),
             ),
           ),
-          // -----------------------------------------------------------
 
           SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],

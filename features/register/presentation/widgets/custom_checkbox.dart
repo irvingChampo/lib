@@ -28,8 +28,7 @@ class CustomCheckbox extends StatelessWidget {
             onChanged: onChanged,
             activeColor: colors.primary,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-            // CAMBIO: Se usa el color `outline` del tema.
-            side: BorderSide(color: colors.outline.withOpacity(0.7), width: 1.5), // ANTES: Colors.grey.shade400
+            side: BorderSide(color: colors.outline.withOpacity(0.7), width: 1.5),
           ),
           const SizedBox(width: 12),
           Expanded(

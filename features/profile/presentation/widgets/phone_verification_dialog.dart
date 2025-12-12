@@ -28,7 +28,6 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
       return;
     }
 
-    // Llamamos al provider
     final profileProvider = context.read<ProfileProvider>();
     final success = await profileProvider.verifyPhoneCode(code);
 
@@ -39,7 +38,6 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
           const SnackBar(content: Text('¡Teléfono verificado correctamente!')),
         );
       } else {
-        // Si hubo error, mostramos el mensaje del provider
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(profileProvider.errorMessage ?? 'Código inválido'),
@@ -73,7 +71,6 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    // Usamos watch para reaccionar a cambios de estado (como isLoading)
     final profileProvider = context.watch<ProfileProvider>();
 
     return Dialog(
@@ -97,7 +94,6 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
             ),
             const SizedBox(height: 24),
 
-            // Campo para el código
             TextField(
               controller: _codeController,
               keyboardType: TextInputType.number,
@@ -107,7 +103,7 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               decoration: InputDecoration(
                 hintText: '000000',
-                counterText: '', // Oculta el contador de caracteres
+                counterText: '',
                 filled: true,
                 fillColor: theme.colorScheme.surfaceVariant.withOpacity(0.3),
                 border: OutlineInputBorder(
@@ -119,7 +115,6 @@ class _PhoneVerificationDialogState extends State<PhoneVerificationDialog> {
 
             const SizedBox(height: 24),
 
-            // Botones de acción
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

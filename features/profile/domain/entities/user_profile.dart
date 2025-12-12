@@ -1,7 +1,6 @@
 import 'package:bienestar_integral_app/features/auth/domain/entities/user.dart';
 import 'package:bienestar_integral_app/features/register/domain/entities/skill.dart';
 
-// Esta entidad representa un slot de disponibilidad individual.
 class AvailabilitySlot {
   final String dayOfWeek;
   final String startTime;
@@ -14,7 +13,6 @@ class AvailabilitySlot {
   });
 }
 
-// Esta entidad agrupa toda la información del perfil de un usuario.
 class UserProfile {
   final User user;
   final List<Skill> skills;

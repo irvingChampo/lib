@@ -1,11 +1,11 @@
 class Product {
   final int id;
   final String name;
-  final String description; // (+) Nuevo
+  final String description;
   final int categoryId;
   final String unit;
   final bool perishable;
-  final int? shelfLifeDays; // (+) Nuevo (puede ser nulo si no es perecedero)
+  final int? shelfLifeDays;
 
   Product({
     required this.id,

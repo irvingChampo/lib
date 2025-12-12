@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:bienestar_integral_app/core/error/exception.dart';
-// Eliminamos import core/network/http_client.dart
 import 'package:bienestar_integral_app/features/events/data/models/event_model.dart';
 import 'package:bienestar_integral_app/features/events/data/models/event_participant_model.dart';
 import 'package:bienestar_integral_app/features/events/data/models/event_registration_model.dart';
@@ -15,7 +14,6 @@ abstract class EventDatasource {
   Future<List<EventRegistrationModel>> getMyRegistrations();
   Future<void> unregisterFromEvent(int eventId);
 
-  // Admin Methods
   Future<void> createEvent(Map<String, dynamic> eventData);
   Future<void> updateEvent(int eventId, Map<String, dynamic> eventData);
   Future<void> deleteEvent(int eventId);
@@ -26,7 +24,6 @@ abstract class EventDatasource {
 class EventDatasourceImpl implements EventDatasource {
   final http.Client client;
 
-  // MODIFICACIÓN: Inyección obligatoria
   EventDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -51,9 +48,6 @@ class EventDatasourceImpl implements EventDatasource {
     }
     return apiUrl;
   }
-
-  // ... (El resto de métodos se mantienen IGUALES)
-  // Copia el contenido completo de tu archivo original.
 
   @override
   Future<List<EventModel>> getEventsByKitchen(int kitchenId) async {

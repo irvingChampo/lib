@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 enum MyEventsStatus { initial, loading, success, error }
 
 class MyEventsProvider extends ChangeNotifier {
-  // MODIFICACIÓN: Dependencias Inyectadas
   final GetMyKitchenSubscriptions _getMyKitchenSubscriptions;
   final GetMyEventRegistrations _getMyEventRegistrations;
   final UnregisterFromEvent _unregisterFromEvent;
@@ -24,7 +23,6 @@ class MyEventsProvider extends ChangeNotifier {
 
   int? _processingRegistrationId;
 
-  // MODIFICACIÓN: Constructor limpio
   MyEventsProvider({
     required GetMyKitchenSubscriptions getMyKitchenSubscriptions,
     required GetMyEventRegistrations getMyEventRegistrations,
@@ -39,7 +37,6 @@ class MyEventsProvider extends ChangeNotifier {
   List<EventRegistration> get registrations => _registrations;
   int? get processingRegistrationId => _processingRegistrationId;
 
-  // Cargar Cocinas
   Future<void> fetchMySubscriptions() async {
     _status = MyEventsStatus.loading;
     _errorMessage = null;
@@ -61,7 +58,6 @@ class MyEventsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cargar Eventos
   Future<void> fetchMyRegistrations() async {
     _status = MyEventsStatus.loading;
     _errorMessage = null;

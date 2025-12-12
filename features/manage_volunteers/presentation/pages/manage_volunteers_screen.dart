@@ -30,13 +30,11 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
         setState(() {
           _event = extra;
         });
-        // Cargar participantes REALES desde la API
         context.read<AdminEventsProvider>().loadEventParticipants(_event!.id);
       }
     });
   }
 
-  // --- LÓGICA PARA ELIMINAR EVENTO ---
   void _handleDeleteEvent() {
     if (_event == null) return;
 
@@ -52,14 +50,13 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
       btnOkColor: Colors.red,
       btnOkOnPress: () async {
         final provider = context.read<AdminEventsProvider>();
-        // Llamamos a removeEvent en el provider
         final success =
         await provider.removeEvent(_event!.id, _event!.kitchenId);
 
         if (!mounted) return;
 
         if (success) {
-          context.pop(); // Regresa al Admin Home
+          context.pop();
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Evento eliminado correctamente.')),
           );
@@ -81,7 +78,6 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
     return text[0].toUpperCase() + text.substring(1);
   }
 
-  // Helpers de fecha
   String _translateDay(String day) {
     const days = {
       'Monday': 'Lunes',
@@ -183,17 +179,13 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
         title: 'Voluntarios',
         showBackButton: true,
         actions: [
-          // BOTÓN DE EDITAR (Corregido color para visibilidad)
           IconButton(
-            // Usamos onPrimary (Negro) para que contraste con el AppBar amarillo
             icon: Icon(Icons.edit, color: theme.colorScheme.onPrimary),
             tooltip: 'Editar evento',
             onPressed: () {
-              // Navegar a la pantalla de edición pasando el evento actual
               context.push(AppRoutes.editEventPath, extra: _event);
             },
           ),
-          // BOTÓN DE ELIMINAR
           IconButton(
             icon: Icon(Icons.delete_outline, color: theme.colorScheme.error),
             tooltip: 'Eliminar evento',
@@ -206,7 +198,6 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
         child: ListView(
           padding: const EdgeInsets.only(bottom: 40),
           children: [
-            // Cabecera con info del evento
             EventInfoSection(
               description: _event!.description,
               dayName: dateInfo['dayName']!,
@@ -251,17 +242,13 @@ class _ManageVolunteersScreenState extends State<ManageVolunteersScreen> {
             else
               ...participants.map((participant) => VolunteerItemCard(
                 name: participant.fullName,
-                reputation: 5.0, // Dummy
-                avatarUrl: '', // Dummy.
+                reputation: 5.0,
+                avatarUrl: '',
                 onViewProfile: () {
                   _showParticipantDetails(
                       context, participant.email, participant.phoneNumber);
                 },
-              //  onAssignRole: () {
-              //    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              //        content: Text(
-              //            'Asignar rol a ${participant.names} (Próximamente)')));
-              //  },
+
               )),
           ],
         ),

@@ -41,7 +41,6 @@ class DrawerMenuItem extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    // CAMBIO AQUÍ: Usar color del tema, no negro fijo
                     color: colors.onSurface,
                   ),
                 ),

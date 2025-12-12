@@ -37,7 +37,6 @@ class IngredientsInputCard extends StatelessWidget {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Lógica para llamar a la IA y generar la receta
                 },
                 child: const Text('Generar Receta'),
               ),

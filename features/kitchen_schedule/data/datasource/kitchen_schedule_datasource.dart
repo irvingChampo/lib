@@ -20,7 +20,6 @@ class KitchenScheduleDatasourceImpl implements KitchenScheduleDatasource {
   final http.Client client;
   final String? _apiUrl = dotenv.env['API_URL'];
 
-  // MODIFICACIÓN: Inyección explícita
   KitchenScheduleDatasourceImpl({required this.client});
 
   Future<Map<String, String>> _getHeaders() async {
@@ -41,7 +40,6 @@ class KitchenScheduleDatasourceImpl implements KitchenScheduleDatasource {
     required String weekendStart,
     required String weekendEnd,
   }) async {
-    // ... (El resto del código se mantiene idéntico)
     var baseUrl = _apiUrl;
     if (baseUrl != null && baseUrl.endsWith('/')) {
       baseUrl = baseUrl.substring(0, baseUrl.length - 1);
@@ -60,21 +58,9 @@ class KitchenScheduleDatasourceImpl implements KitchenScheduleDatasource {
     };
     final bodyJson = json.encode(bodyMap);
 
-    debugPrint('\n🔵 ================== REQUEST LOG ==================');
-    debugPrint('📍 URL: $url');
-    debugPrint('📦 BODY (Lo que enviamos):');
-    debugPrint(bodyJson);
-    debugPrint('🔵 =================================================\n');
-
     try {
       final headers = await _getHeaders();
       final response = await client.post(url, headers: headers, body: bodyJson);
-
-      debugPrint('\n🟠 ================== RESPONSE LOG ==================');
-      debugPrint('📡 STATUS: ${response.statusCode}');
-      debugPrint('📩 RESPONSE BODY (Lo que respondió el server):');
-      debugPrint(response.body);
-      debugPrint('🟠 ==================================================\n');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final jsonResponse = json.decode(response.body);
@@ -94,7 +80,6 @@ class KitchenScheduleDatasourceImpl implements KitchenScheduleDatasource {
       }
     } catch (e) {
       if (e is ServerException) rethrow;
-      debugPrint('🔴 ERROR DE CONEXIÓN: $e');
       throw NetworkException('Error de conexión al crear horarios');
     }
   }

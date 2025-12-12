@@ -26,11 +26,9 @@ class UserProfileModel extends UserProfile {
   });
 
   factory UserProfileModel.fromJson(Map<String, dynamic> json) {
-    // La API devuelve las skills del usuario asociadas, no las skills en sí.
-    // Necesitamos extraer solo el 'skillId' de cada objeto.
-    // Nota: El endpoint de GET /skills será necesario para obtener los nombres de estas skills.
+
     var userSkills = (json['skills'] as List)
-        .map((skillJson) => SkillModel(id: skillJson['skillId'], name: '')) // El nombre lo obtendremos por separado
+        .map((skillJson) => SkillModel(id: skillJson['skillId'], name: ''))
         .toList();
 
     return UserProfileModel(

@@ -10,7 +10,6 @@ class KitchenSubscriptionModel extends KitchenSubscription {
   factory KitchenSubscriptionModel.fromJson(Map<String, dynamic> json) {
     return KitchenSubscriptionModel(
       membershipId: json['membershipId'] ?? 0,
-      // Reutilizamos el KitchenModel existente para parsear los datos de la cocina anidada
       kitchen: KitchenModel.fromJson(json['kitchen'] ?? {}),
     );
   }
